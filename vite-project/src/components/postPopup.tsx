@@ -1,4 +1,3 @@
-import { useEditor } from "@tiptap/react";
 import { Button } from "@/components/ui/button"
 import { Editor } from "@tiptap/react";
 import { Tiptap } from "./Tiptap";
@@ -13,7 +12,6 @@ import {
 export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolean) => void }) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
-    const [position, setPosition] = useState("bottom")
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         console.log(editor?.getHTML())
         try {

@@ -85,11 +85,11 @@ app.post("/blog" ,upload.single('file'), async (req, res) => {
   }
 })
 
-app.put("/blog", (req, res) => {
+app.put("/blog:id", (req, res) => {
 
 })
 
-app.delete("/blog" , (req, res) => {
+app.delete("/blog:id" , (req, res) => {
 
 })
 
