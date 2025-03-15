@@ -1,0 +1,265 @@
+import React, { useEffect, useState } from 'react';
+import { Menu, Layout, Users, Phone, FileText, LogOut } from 'lucide-react';
+import { Tiptap } from './Tiptap';
+import PostPopup from './postPopup';
+
+interface phoneNumber {
+  number: string,
+  provider: string,
+  date: string,
+}
+const Dashboard = () => {
+  const [activeSection, setActiveSection] = useState('projects');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [phoneNumbers, setPhoneNumbers] = useState<phoneNumber[]>([]);
+  const [isPosting, setIsPosting] = useState<boolean>(false);
+
+  // Mock data for demonstration
+  const projects = [
+    { id: 1, title: 'Website Redesign', status: 'In Progress', lastUpdated: '2025-03-10' },
+    { id: 2, title: 'Mobile App Development', status: 'Completed', lastUpdated: '2025-03-05' },
+    { id: 3, title: 'E-commerce Integration', status: 'Planning', lastUpdated: '2025-03-12' }
+  ];
+
+  const blogPosts = [
+    { id: 1, title: 'Top 10 Design Trends', status: 'Published', author: 'Jane Smith', publishDate: '2025-03-08' },
+    { id: 2, title: 'How to Optimize Your Website', status: 'Draft', author: 'John Doe', publishDate: null },
+    { id: 3, title: 'The Future of Web Development', status: 'Published', author: 'Jane Smith', publishDate: '2025-03-01' }
+  ];
+
+
+  useEffect(() => {
+    async function getNumbers() {
+      try {
+        const res = await fetch("/api/phone").then(res => res.json());
+        setPhoneNumbers(res);
+        // alert(res)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+    getNumbers()
+  }, [])
+  
+  // Render content based on active section
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'projects':
+        return (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">Projects</h2>
+              <button
+               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">+ Add Project</button>
+            </div>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
+                      <th className="text-right p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {projects.map((project) => (
+                      <tr key={project.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="p-4 font-medium text-gray-900">{project.title}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            project.status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' : 
+                            project.status === 'Completed' ? 'bg-green-100 text-green-800' : 
+                            'bg-blue-100 text-blue-800'
+                          }`}>
+                            {project.status}
+                          </span>
+                        </td>
+                        <td className="p-4 text-gray-600">{project.lastUpdated}</td>
+                        <td className="p-4 text-right">
+                          <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                          <button className="text-red-600 hover:text-red-800 font-medium transition-colors">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        );
+      case 'phone-numbers':
+        return (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">Phone Numbers</h2>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">+ Add Number</button>
+            </div>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Number</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
+                      <th className="text-right p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {phoneNumbers.map((item, id) => (
+                      <tr key={id} className="hover:bg-gray-50 transition-colors">
+                        <td className="p-4 font-medium text-gray-900">{item.provider}</td>
+                        <td className="p-4">{item.number}</td>
+                        <td className="p-4 text-gray-600">{item.date}</td>
+                        <td className="p-4 text-right">
+                          <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                          <button className="text-red-600 hover:text-red-800 font-medium transition-colors">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        );
+      case 'blog':
+        return (
+          <div>
+            {isPosting && <PostPopup />}
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">Blog Posts</h2>
+              <button
+              onClick={() => setIsPosting(true)} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">+ New Post</button>
+            </div>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Author</th>
+                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Publish Date</th>
+                      <th className="text-right p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {blogPosts.map((post) => (
+                      <tr key={post.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="p-4 font-medium text-gray-900">{post.title}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            post.status === 'Published' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {post.status}
+                          </span>
+                        </td>
+                        <td className="p-4">{post.author}</td>
+                        <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
+                        <td className="p-4 text-right">
+                          <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                          <button className="text-red-600 hover:text-red-800 font-medium transition-colors">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className='mt-6'>
+            <Tiptap />
+            </div>
+          </div>
+        );
+      default:
+        return <div>Select a section</div>;
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className={`bg-gray-800 text-white ${sidebarCollapsed ? 'w-16' : 'w-64'} transition-all duration-300`}>
+        <div className="p-4 flex items-center justify-between">
+          {!sidebarCollapsed && <h1 className="text-xl font-bold">CMS Dashboard</h1>}
+          <button 
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
+            className="p-2 rounded hover:bg-gray-700"
+          >
+            <Menu size={20} />
+          </button>
+        </div>
+        <nav className="mt-6">
+          <ul>
+            <li>
+              <button 
+                onClick={() => setActiveSection('projects')} 
+                className={`flex items-center w-full p-4 ${activeSection === 'projects' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+              >
+                <Layout size={20} />
+                {!sidebarCollapsed && <span className="ml-4">Projects</span>}
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveSection('phone-numbers')} 
+                className={`flex items-center w-full p-4 ${activeSection === 'phone-numbers' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+              >
+                <Phone size={20} />
+                {!sidebarCollapsed && <span className="ml-4">Phone Numbers</span>}
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveSection('blog')} 
+                className={`flex items-center w-full p-4 ${activeSection === 'blog' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+              >
+                <FileText size={20} />
+                {!sidebarCollapsed && <span className="ml-4">Blog</span>}
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <div className="absolute bottom-0 left-0">
+          <button className="flex items-center p-4 text-red-300 hover:bg-gray-700 transition-colors">
+            <LogOut size={20} />
+            {!sidebarCollapsed && <span className="ml-4">Logout</span>}
+          </button>
+        </div>
+      </div>
+      
+      {/* Main content */}
+      <div className="flex-1 overflow-auto">
+        <header className="bg-white shadow p-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold">
+              {activeSection === 'projects' ? 'Projects Management' : 
+               activeSection === 'phone-numbers' ? 'Phone Numbers Management' : 'Blog Management'}
+            </h1>
+            <div className="flex items-center">
+              <div className="mr-4 text-right">
+                <p className="font-medium">Admin User</p>
+                <p className="text-sm text-gray-500">admin@example.com</p>
+              </div>
+              <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                A
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <main className="p-6">
+          {renderContent()}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
+
+
