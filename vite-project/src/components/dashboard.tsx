@@ -170,9 +170,9 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            <div className='mt-6'>
+            {/* <div className='mt-6'>
             <Tiptap />
-            </div>
+            </div> */}
           </div>
         );
       default:

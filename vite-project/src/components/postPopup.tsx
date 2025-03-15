@@ -1,14 +1,20 @@
 import { useEditor } from "@tiptap/react";
+import { Editor } from "@tiptap/react";
 import { Tiptap } from "./Tiptap";
 import React, { useState } from "react";
 export default function PostPopup() {
-    // The alert is probably for debugging - you can remove it when ready
-    // alert("hey")
-    const editor = useEditor();
+    const [editor, setEditor] = useState<Editor | null>(null);
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement> ) {
+        console.log(editor?.getHTML())
         try {
             e.preventDefault() ;
-            const reqObj = {content: editor?.getHTML()};
+            const date = new Date() ; 
+            const reqObj = {
+                content: editor?.getHTML(),
+                author: "braims",
+                publishDate: date.toDateString(),
+                id: String(Math.random())
+            };
             const formData = new FormData();
             formData.append('file', e.target.image.files[0]);
             formData.append("content", JSON.stringify(reqObj))
@@ -37,8 +43,13 @@ export default function PostPopup() {
                 </button>
                 <input
                 name="image"
+                required
                 type="file" />
-                <Tiptap />
+                <Tiptap 
+                setEditor={setEditor}
+                />
+
+                <button type="submit">submit</button>
                 </form>
             </div>
         </div>
