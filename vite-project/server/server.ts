@@ -27,6 +27,8 @@ db.exec(`CREATE TABLE IF NOT EXISTS blog(
   author TEXT NOT NULL,
   image TEXT NOT NULL,
   content TEXT NOT NULL,
+  title TEXT NOT NULL,
+  lng TEXT NOT NULL, 
   publishDate TEXT NOT NULL,
   id TEXT PRIMARY KEY
 )`);
@@ -72,12 +74,12 @@ app.get("/blog", (req, res) => {
 app.post("/blog" ,upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content")
-    const { content, author, publishDate, id } = JSON.parse(req.body.content);
+    const { content, author, publishDate, title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
     console.log('the damn image', image)
-    const updateBlog = db.prepare("INSERT INTO blog Values(?, ?, ? , ? ,? )")
-    updateBlog.run(author, image, content , publishDate, id)
+    const updateBlog = db.prepare("INSERT INTO blog Values(?, ?, ? , ? ,? , ?, ?)")
+    updateBlog.run(author, image, content ,title,lng, publishDate, id)
   } catch(err) {
     console.log(err)
   }

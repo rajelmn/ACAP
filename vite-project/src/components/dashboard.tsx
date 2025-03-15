@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isPosting, setIsPosting] = useState<boolean>(false);
 
   // Mock data for demonstration
+  // alert(isPosting)
   const projects = [
     { id: 1, title: 'Website Redesign', status: 'In Progress', lastUpdated: '2025-03-10' },
     { id: 2, title: 'Mobile App Development', status: 'Completed', lastUpdated: '2025-03-05' },
@@ -128,7 +129,7 @@ const Dashboard = () => {
       case 'blog':
         return (
           <div>
-            {isPosting && <PostPopup />}
+            {isPosting && <PostPopup setIsPosting={setIsPosting}/>}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Blog Posts</h2>
               <button
