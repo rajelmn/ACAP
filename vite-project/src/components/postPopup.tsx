@@ -3,12 +3,35 @@ import { Editor } from "@tiptap/react";
 import { Tiptap } from "./Tiptap";
 import React, { useState } from "react";
 import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+import {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+} from "@/components/ui/command"
+
+
+import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select"
+} from "@/components/ui/select"
 export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolean) => void }) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
@@ -22,8 +45,8 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                 author: "braims",
                 publishDate: date.toDateString(),
                 id: String(Math.random()),
-                title: e.target.title.value, 
-                lng: lang || "en", 
+                title: e.target.title.value,
+                lng: lang || "en",
             };
             const formData = new FormData();
             formData.append('file', e.target.image.files[0]);
@@ -42,8 +65,8 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
     }
 
     function handleLanguageChange(language: string) {
-        console.log(language) ;
-        setLang(language) ;
+        console.log(language);
+        setLang(language);
     }
 
     return (
@@ -142,16 +165,47 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                     <div className="flex justify-end pt-4">
                         <button
                             type="button"
-                              onClick={() => setIsPosting(false)}
+                            onClick={() => setIsPosting(false)}
                             className="px-4 cursor-pointer py-1 mr-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
                         >
                             Cancel
                         </button>
 
-                        <Button type="submit">Publish Post</Button>
+                        <Dialog>
+                            <DialogTrigger>
+
+                                <Button type="submit">Publish Post</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>is this blog a translation?</DialogTitle>
+                                    <DialogFooter>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <Button >
+                                                No
+                                            </Button>
+                                            <Dialog>
+                                                <DialogTrigger>
+
+                                                    <Button className="px-6">
+                                                        yes
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    
+
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
+                                    </DialogFooter>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </form>
             </div>
+            
+
         </div>
     );
 }

@@ -5,7 +5,7 @@ import multer from "multer";
 import cors from "cors"
 const PORT = 3000
 const app = express();
-const db = new Database("mydb", {verbose: console.log});
+const db = new Database("mydb");
 const upload = multer({ dest: "uploads/" });
 
 
@@ -20,6 +20,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS project(
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   lastUpdate TEXT NOT NULL,
+  icon TEXT NOT NULL,
   id TEXT PRIMARY KEY
 )`);
 
@@ -61,17 +62,28 @@ app.get("/phone", (req, res) => {
   }
 })
 
-app.get("/blog", (req, res) => {
+app.get("/blog/:id?", (req, res) => {
   try {
-    const getBlogs = db.prepare("SELECT * FROM blog").all();
-    res.status(200).json(getBlogs)
+    const {id} = req.params; 
+    console.log(id)
+    if(!id) {
+      const getBlogs = db.prepare("SELECT * FROM blog").all();
+      return res.status(200).json(getBlogs)
+    }
+
+    const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?") ;
+    const blog = blogPrep.get(id) ; 
+    if(!blog) {
+      return res.status(401).json({message: "blog doesnt exist"})
+    }
+    res.status(200).json(blog)
   }
   catch(err) {
     console.log(err)
   }
 })
 
-app.post("/blog" ,upload.single('file'), async (req, res) => {
+app.post("/blog:id" ,upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content")
     const { content, author, publishDate, title, lng, id } = JSON.parse(req.body.content);

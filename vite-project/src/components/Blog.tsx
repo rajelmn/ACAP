@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"
 export interface blogObj {
     // blog: string,
     image: string,
@@ -11,11 +11,12 @@ export interface blogObj {
 
 }
 
-export function Blog({ image, content, author, publishDate, title }: blogObj) {
+
+export function Blog({ image, content, author, publishDate, title, id }: blogObj) {
 
     return (
+        <Link to={`/blog/${id}`}>
         <div className="blog p-4 rounded-2xl ">
-            <img src={"http://localhost:1337"+ image} className="rounded-md w-full" alt="" />
             <img src={image} className="rounded-md w-full" alt=""  />
             <div className="blog-header flex justify-between items-center mt-2">
             <p className="text-xs md:text-sm font-semibold text-[#fd9c1d]">{author}</p>
@@ -29,5 +30,6 @@ export function Blog({ image, content, author, publishDate, title }: blogObj) {
                 Read More 
             </p>
         </div>
+        </Link>
     )
 }

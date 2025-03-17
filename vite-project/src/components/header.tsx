@@ -28,7 +28,7 @@ export default function Header({ setLang }: { setLang: (arg: string) => void }) 
 
         <>
             {isClickedOnMenu && <SideBar setIsClickedOnMenu={setIsclickedOnMenu} />}
-            <header className="p-4 fixed bg-white flex items-center justify-between w-screen">
+            <header className="p-4  bg-white flex items-center justify-between w-screen">
                 <div className="flex items-center mr-2">
                     <div className="flex items-center mr-8">
                         <img src={logo} className="w-12 mr-2" alt="ASAP Logo" />
@@ -88,8 +88,12 @@ export default function Header({ setLang }: { setLang: (arg: string) => void }) 
 
                         <Menu />
                     </span>
-                    <button className="px-5 py-2.5 hidden md:flex  bg-[#FDB71D] text-white cursor-pointer font-medium shadow-sm hover:bg-amber-700 hover:shadow-md active:bg-amber-800 active:shadow-inner transition-all items-center space-x-2">
-                        <span>Donate Now</span>
+                    <button className={`px-5 py-2.5 hidden md:flex ${i18n.language === "ar" ? "flex-row-reverse items-center": ""}  bg-[#FDB71D] text-white 
+                        cursor-pointer font-medium shadow-sm hover:bg-amber-700 hover:shadow-md
+                         active:bg-amber-800 active:shadow-inner transition-all items-center space-x-2`}>
+                        <span className="ml-2">
+                            {t("donation.header")}
+                        </span>
                         <Heart />
                     </button>
                 </div>

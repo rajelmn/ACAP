@@ -10,11 +10,13 @@ import Card from "./card";
 import logo from "../assets/acap.png"
 import { Droplets, Sailboat, Home, HeartPulse } from 'lucide-react';
 import { MdOutlineLocalPharmacy as Pharmacy } from "react-icons/md";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { Blog, blogObj } from "./Blog";
 import { Heart, School, Book, Users } from 'lucide-react'; // Import different icons for variety
 import { Button } from "./ui/button";
 import donation from "../assets/donation.jpg"
+import i18n from "@/i18n";
+import { Link } from "react-router-dom";
 
 export default function Main({ lang }: { lang: string }) {
     const { t } = useTranslation();
@@ -45,18 +47,20 @@ export default function Main({ lang }: { lang: string }) {
             {/* Hero Section */}
             <div className='h-full flex flex-col justify-center text-white items-start px-8 md:px-16 lg:px-24'>
                 <p className='font-bold text-5xl md:text-6xl/tight max-w-2xl'>
-                    <span className=''>
-                        The power to <br /> Choose in a
+                <Trans>
+                    <span>
+                        {t("home.mainMessage")}
                     </span>
                     <span className='font-thin'>
-                        {' '}child's <br /> hands
+                        {' '} {t("home.smallText")}
                     </span>
+                </Trans>
                 </p>
                 <p className='mt-4 text-lg md:text-xl max-w-xl text-gray-200'>
-                    Helping children shape their own future through education and support
+                    {t("home.definition")}
                 </p>
                 <button className='px-5 py-2 flex items-center gap-2 rounded-md bg-[#FDB71D] text-black font-medium mt-8 hover:bg-[#e9a813] transition-colors'>
-                    Support Our Cause <Heart className="ml-1" size={18} />
+                    {t("home.donationButton")} <Heart className="ml-1" size={18} />
                 </button>
             </div>
 
@@ -151,7 +155,7 @@ export default function Main({ lang }: { lang: string }) {
                         </span>
                     </h1>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2  gap-8 items-center">
                         <div className="relative">
                             <img src={logo} className="w-full h-auto rounded-lg shadow-lg" alt="Our Mission" />
 
@@ -162,63 +166,66 @@ export default function Main({ lang }: { lang: string }) {
                                 {t("programs.aboutUs.definition")}
                             </p>
 
+                            <Link to="/about-us">
+                            
                             <Button className="mt-5">
                                 Read more
                             </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section className="py-20 bg-gray-50">
-  <div className="container mx-auto px-4 max-w-6xl">
-    <h1 className="font-bold text-4xl md:text-5xl text-center mb-12">
-      <span className="relative">
-        Our Vision
-        <span className="absolute -bottom-3 left-1/4 right-1/4 h-1 bg-[#FDB71D]"></span>
-      </span>
-    </h1>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      <div>
-        <p className="text-lg/relaxed text-gray-700 mb-6">
-          To be the leading organization in Mauritania in the field of poverty alleviation, by providing humanitarian and sustainable support to needy groups, and contributing to building a more inclusive and socially just society.
-        </p>
-        <div className="mt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-[#FDB71D] text-sm">01</span>
-            </div>
-            <span className="font-medium">Poverty Alleviation</span>
-          </div>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-[#FDB71D] text-sm">02</span>
-            </div>
-            <span className="font-medium">Humanitarian Support</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-[#FDB71D] text-sm">03</span>
-            </div>
-            <span className="font-medium">Social Justice</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="relative flex justify-center md:justify-end">
-        <img 
-          src={donation} 
-          className="w-full max-w-md rounded-lg shadow-lg" 
-          alt="Our Vision" 
-        />
-        <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-[#FDB71D] rounded-full flex items-center justify-center text-white font-bold text-sm">
-          Make a<br/>Difference
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <h1 className="font-bold text-4xl md:text-5xl text-center mb-12">
+                        <span className="relative">
+                            {t("programs.aboutUs.vision.title")}
+                            <span className="absolute -bottom-3 left-1/4 right-1/4 h-1 bg-[#FDB71D]"></span>
+                        </span>
+                    </h1>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div >
+                            <p className="text-lg/relaxed text-gray-700 mb-6">
+                              {t("programs.aboutUs.vision.definition")}
+                            </p>
+                            <div className="mt-6">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span className="text-[#FDB71D] text-sm">01</span>
+                                    </div>
+                                    <span className="font-medium">Poverty Alleviation</span>
+                                </div>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span className="text-[#FDB71D] text-sm">02</span>
+                                    </div>
+                                    <span className="font-medium">Humanitarian Support</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span className="text-[#FDB71D] text-sm">03</span>
+                                    </div>
+                                    <span className="font-medium">Social Justice</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative flex justify-center md:justify-end">
+                            <img
+                                src={donation}
+                                className="w-full max-w-md rounded-lg shadow-lg"
+                                alt="Our Vision"
+                            />
+                            <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-[#FDB71D] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                Make a<br />Difference
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <h1 className='text-4xl my-9 text-center font-bold mx-auto'>Donation</h1>
             <article className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
@@ -341,21 +348,7 @@ export default function Main({ lang }: { lang: string }) {
             <section className="py-16 bg-gray-100">
                 <h1 className="text-4xl text-center">Our latest blogs</h1>
                 <div className="blog-container gap-5 md:grid-cols-3 grid grid-cols-1">
-                    {/* 
-                <Blog 
-                image={mosque}
-                content="lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt provident, ut iste ad cupiditate placeat, possimus libero aliquid fuga dignissimos consequatur odit quidem voluptatem sunt numquam aperiam labore qui laudantium?"
-                author = "Brahim"
-                date = "2025-03-13"
-                title = "Building a mosque at chinguitti and faced alot of troubles "
-                />
-                <Blog 
-                image={school}
-                content="lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit, ut iste ad cupiditate placeat, possimus libero aliquid fuga dignissimos consequatur odit quidem voluptatem sunt numquam aperiam labore qui laudantium?"
-                author = "Brahim"
-                date = "2025-03-13"
-                title = "Gumball school is now under upgrade and new items are added daily to improve it "
-                /> */}
+
                     {blogs.map((blog: blogObj) =>
                         <Blog
                             content={blog.content}
