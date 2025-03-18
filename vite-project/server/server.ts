@@ -57,8 +57,8 @@ app.get("/phone", (req, res) => {
     const getContent = db.prepare("SELECT * FROM phone").all();
     console.log(getContent, 'phone');
     res.status(200).json(getContent);
-    
-  } catch(err) {
+
+  } catch (err) {
     console.log(err)
   }
 })
@@ -66,43 +66,43 @@ app.get("/phone", (req, res) => {
 app.get("/projects/:lng?", (req, res) => {
   try {
     console.log('running')
-    const {lng}: {lng: string} = req.params ; 
-    if(!lng) {
-      const getProjects = db.prepare("SELECT * FROM projects").all() ; 
-      console.log(getProjects) ; 
+    const { lng }: { lng: string } = req.params;
+    if (!lng) {
+      const getProjects = db.prepare("SELECT * FROM projects").all();
+      console.log(getProjects);
       return res.status(200).json(getProjects)
     }
     const getLang = db.prepare("SELECT * FROM projects WHERE lng=?")
     const getLangProjects = getLang.all(lng);
     res.status(200).json(getLangProjects);
     console.log(getLangProjects, 'lang')
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 })
 
 app.get("/blog/:id?", (req, res) => {
   try {
-    const {id} = req.params; 
+    const { id } = req.params;
     console.log(id, 'blog id')
-    if(!id) {
+    if (!id) {
       const getBlogs = db.prepare("SELECT * FROM blog").all();
       return res.status(200).json(getBlogs)
     }
 
-    const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?") ;
-    const blog = blogPrep.get(id) ; 
-    if(!blog) {
-      return res.status(401).json({message: "blog doesnt exist"})
+    const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?");
+    const blog = blogPrep.get(id);
+    if (!blog) {
+      return res.status(401).json({ message: "blog doesnt exist" })
     }
     res.status(200).json(blog)
   }
-  catch(err) {
+  catch (err) {
     console.log(err)
   }
 })
 
-app.post("/blog" ,upload.single('file'), async (req, res) => {
+app.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content")
     const { content, author, publishDate, title, lng, id } = JSON.parse(req.body.content);
@@ -110,8 +110,9 @@ app.post("/blog" ,upload.single('file'), async (req, res) => {
     const image = result.secure_url || result.url;
     console.log('the damn image', image)
     const updateBlog = db.prepare("INSERT INTO blog Values(?, ?, ? , ? ,? , ?, ?)")
-    updateBlog.run(author, image, content ,title,lng, publishDate, id)
-  } catch(err) {
+    updateBlog.run(author, image, content, title, lng, publishDate, id); 
+    res.status(200)
+  } catch (err) {
     console.log(err)
   }
 })
@@ -125,9 +126,10 @@ app.post("/projects", upload.single('file'), async (req, res) => {
     console.log("project image", image);
 
     const insertProject = db.prepare("INSERT INTO projects Values(?,?,?,?,?,?,?) ")
-    insertProject.run(title, description, publishDate, cost, image, lng ,id)
+    insertProject.run(title, description, publishDate, cost, image, lng, id)
+    res.status(200)
 
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 })
@@ -136,11 +138,39 @@ app.put("/blog:id", (req, res) => {
 
 })
 
-app.delete("/blog:id" , (req, res) => {
 
+app.delete("/blog/:id", (req, res) => {
+  try {
+    const { id }: { id: string } = req.params;
+    const blogDelete = db.prepare("DELETE FROM blog WHERE id = ?")
+    blogDelete.run(id)
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+app.delete("/projects/:id", (req, res) => {
+  try {
+    const { id }: { id: string } = req.params;
+    console.log("deleting", id)
+    const projectDelete = db.prepare("DELETE FROM projects WHERE id = ?")
+    projectDelete.run(id)
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+app.delete("/phone/:id", (req, res) => {
+  try {
+    const { id }: { id: string } = req.params;
+    const phoneDelete = db.prepare("DELETE FROM blog WHERE id = ?")
+    phoneDelete.run(id)
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 
 app.listen(PORT, () => {
-    console.log("app running on ", PORT)
+  console.log("app running on ", PORT)
 })
