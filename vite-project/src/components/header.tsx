@@ -6,6 +6,7 @@ import { useState } from "react";
 import { RxHamburgerMenu as Menu } from "react-icons/rx";
 import { useTranslation } from "react-i18next";
 import {
+
     Select,
     SelectContent,
     SelectItem,
@@ -13,22 +14,25 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export default function Header({ setLang }: { setLang: (arg: string) => void }) {
+export default function Header({ setLang }: { setLang: (
+    arg: string) => void}) 
+    {
     const [isClickedOnMenu, setIsclickedOnMenu] = useState<boolean>(false)
-    // const [lang, setLang] = useState("");
     const { t, i18n } = useTranslation();
 
 
     function handleLanguageChange(language: string) {
         console.log(language);
-        setLang(language);
+        if(setLang) {
+            setLang(language);
+        }
         i18n.changeLanguage(language || "en")
     }
     return (
 
         <>
-            {isClickedOnMenu && <SideBar setIsClickedOnMenu={setIsclickedOnMenu} />}
-            <header className="p-4  bg-white flex items-center justify-between w-screen">
+            {isClickedOnMenu && <SideBar handleLanguageChange={handleLanguageChange} setIsClickedOnMenu={setIsclickedOnMenu} />}
+            <header className="p-4 bg-white flex items-center justify-between w-screen">
                 <div className="flex items-center mr-2">
                     <div className="flex items-center mr-8">
                         <img src={logo} className="w-12 mr-2" alt="ASAP Logo" />
@@ -38,18 +42,18 @@ export default function Header({ setLang }: { setLang: (arg: string) => void }) 
                     </div>
                     <ul className="hidden md:flex space-x-8">
                         <li className="hover:text-amber-500 transition-colors">
-                            <a href="#">{t("header.home")}</a>
+                            <a href="/#">{t("header.home")}</a>
                         </li>
                         <li className="hover:text-amber-500 transition-colors" >
-                            <a href="#">{t("header.aboutUs")}</a>
+                            <a href="/#about-us">{t("header.aboutUs")}</a>
                         </li>
                         <li className="hover:text-amber-500 transition-colors" >
-                            <a href="#">
+                            <a href="/#blog">
                                 {t("header.blog")}
                             </a>
                         </li>
                         <li className="hover:text-amber-500 transition-colors">
-                            <a href="#">
+                            <a href="/#contact">
                                 {t("header.contact")}
                             </a>
                         </li>
@@ -88,6 +92,7 @@ export default function Header({ setLang }: { setLang: (arg: string) => void }) 
 
                         <Menu />
                     </span>
+                    <a href="/#donation">
                     <button className={`px-5 py-2.5 hidden md:flex ${i18n.language === "ar" ? "flex-row-reverse items-center": ""}  bg-[#FDB71D] text-white 
                         cursor-pointer font-medium shadow-sm hover:bg-amber-700 hover:shadow-md
                          active:bg-amber-800 active:shadow-inner transition-all items-center space-x-2`}>
@@ -96,6 +101,7 @@ export default function Header({ setLang }: { setLang: (arg: string) => void }) 
                         </span>
                         <Heart />
                     </button>
+                    </a>
                 </div>
             </header>
         </>

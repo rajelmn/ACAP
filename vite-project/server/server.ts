@@ -9,10 +9,12 @@ const db = new Database("mydb");
 const upload = multer({ dest: "uploads/" });
 
 
+
 db.exec(`CREATE TABLE IF NOT EXISTS phone(
   date TEXT NOT NULL,
   number INTEGER NOT NULL,
-  provider TEXT
+  image TEXT, 
+  id TEXT PRIMARY KEY
 )`);
 
 db.exec(`CREATE TABLE IF NOT EXISTS projects(
@@ -66,7 +68,7 @@ app.get("/phone", (req, res) => {
 app.get("/projects/:lng?", (req, res) => {
   try {
     console.log('running')
-    const { lng }: { lng: string } = req.params;
+    const { lng }: {lng: string} = req.params;
     if (!lng) {
       const getProjects = db.prepare("SELECT * FROM projects").all();
       console.log(getProjects);
@@ -81,14 +83,31 @@ app.get("/projects/:lng?", (req, res) => {
   }
 })
 
-app.get("/blog/:id?", (req, res) => {
+
+app.get("/blog/:lng?",  (req, res) => {
   try {
-    const { id } = req.params;
-    console.log(id, 'blog id')
-    if (!id) {
+
+    const {lng}: {lng?: string } = req.params; 
+  
+    if (!lng) {
       const getBlogs = db.prepare("SELECT * FROM blog").all();
       return res.status(200).json(getBlogs)
     }
+    const getBlogBylang = db.prepare("SELECT * FROM blog WHERE lng = ?"); 
+    const langBlogs = getBlogBylang.all(lng)
+    if(!(langBlogs.length > 0)) return res.status(401).json({message: `no blogs for ${lng} language`})
+    res.status(200).json(langBlogs)
+  }
+  catch(err) {
+    console.log(err)
+     return res.status(500).json({ error: "Internal server error" });
+  }
+})
+app.get("/single-blog/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id, 'blog id')
+   
 
     const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?");
     const blog = blogPrep.get(id);
@@ -104,7 +123,8 @@ app.get("/blog/:id?", (req, res) => {
 
 app.post("/blog", upload.single('file'), async (req, res) => {
   try {
-    console.log(req.body.content, "content")
+    console.log(req.body.content, "content"); 
+    // const theFile = req.file as 
     const { content, author, publishDate, title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
@@ -114,6 +134,24 @@ app.post("/blog", upload.single('file'), async (req, res) => {
     res.status(200).json({ success: true, message: "blog added successfully" });
 
   } catch (err) {
+    console.log(err)
+  }
+})
+
+app.post("/phone" ,upload.single('file'),  async (req, res) => {
+  try {
+    const { phone, id }: {phone: number, id: string} = JSON.parse(req.body.content)
+    // console.log(phone, id, req.file.path)
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const image = result.secure_url || result.url;
+    const date = (new Date()).toLocaleString().split(",")[0] ; 
+    // console.log(date, 'date')
+
+    const insertPhone = db.prepare("INSERT INTO Phone Values(?, ?, ?, ?)")
+    console.log(date, phone, image, id)
+    await insertPhone.run(date , phone, image, id)
+    res.status(200).json({message: "uploaded number succesfuly"})
+  } catch(err) {
     console.log(err)
   }
 })
@@ -141,22 +179,24 @@ app.put("/blog:id", (_req, _res) => {
 })
 
 
-app.delete("/blog/:id", (req, _res) => {
+app.delete("/blog/:id", (req, res) => {
   try {
     const { id }: { id: string } = req.params;
     const blogDelete = db.prepare("DELETE FROM blog WHERE id = ?")
-    blogDelete.run(id)
+    blogDelete.run(id); 
+    res.status(200).json({message: "deleted"})
   } catch (err) {
     console.log(err)
   }
 })
 
-app.delete("/projects/:id", (req, _res) => {
+app.delete("/projects/:id", (req, res) => {
   try {
     const { id }: { id: string } = req.params;
     console.log("deleting", id)
     const projectDelete = db.prepare("DELETE FROM projects WHERE id = ?")
     projectDelete.run(id)
+    res.status(200).json({message: "deleted"})
   } catch (err) {
     console.log(err)
   }

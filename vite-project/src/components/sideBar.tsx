@@ -1,8 +1,10 @@
 // import { IoMdClose as Close } from "react-icons/io";
 // import { FaHeart } from "react-icons/fa";
 import { X, Heart, ChevronRight } from 'lucide-react';
+import Lang from './lang';
 
-export default function SideBar({setIsClickedOnMenu}: {setIsClickedOnMenu: (arg: boolean) => void}) {
+export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {setIsClickedOnMenu: (arg: boolean) => void, handleLanguageChange: (arg: string) => void}) {
+
   return (
     <>
       {/* Backdrop overlay */}
@@ -26,24 +28,56 @@ export default function SideBar({setIsClickedOnMenu}: {setIsClickedOnMenu: (arg:
           {/* Navigation */}
           <nav className="flex-grow py-6">
             <ul className="space-y-1">
-              {['Home', 'About us', 'Blog', 'Contact us'].map((item) => (
-                <li key={item}>
+              {/* {['Home', 'About us', 'Blog', 'Contact us'].map((item) => ( */}
+                <li>
                   <a 
-                    href="#"
+                  onClick={() => setIsClickedOnMenu(false)}
+                    href="/#"
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>{item}</span>
+                    <span>Home</span>
                     <ChevronRight size={16} className="text-gray-400" />
                   </a>
                 </li>
-              ))}
+                <li>
+                  <a 
+                  onClick={() => setIsClickedOnMenu(false)}
+                    href="/#about-us"
+                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    <span>About us</span>
+                    <ChevronRight size={16} className="text-gray-400" />
+                  </a>
+                </li>
+                <li>
+                  <a 
+                  onClick={() => setIsClickedOnMenu(false)}
+                    href="/#blog"
+                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    <span>Blog</span>
+                    <ChevronRight size={16} className="text-gray-400" />
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/#contact"
+                    onClick={() => setIsClickedOnMenu(false)}
+                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    <span>Contact us</span>
+                    <ChevronRight size={16} className="text-gray-400" />
+                  </a>
+                </li>
+              {/* ))} */}
               <li>
               <a 
                     href="#"
+                    // onClick={() => setIsClickedOnMenu(false)}
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>languages</span>
-                    <ChevronRight size={16} className="text-gray-400" />
+                    <Lang handleLanguageChange={handleLanguageChange}/>
+                    {/* <ChevronRight size={16} className="text-gray-400" /> */}
                   </a>
               </li>
             </ul>
@@ -51,10 +85,13 @@ export default function SideBar({setIsClickedOnMenu}: {setIsClickedOnMenu: (arg:
           
           {/* Footer */}
           <div className="p-6 border-t">
+            <a href="/#donation">
+
             <button className="w-full py-3 bg-amber-500 text-white rounded-md flex items-center justify-center space-x-2 hover:bg-amber-600 transition-colors">
               <span className="font-medium">Donate Now</span>
               <Heart size={16} />
             </button>
+            </a>
           </div>
         </div>
       </aside>

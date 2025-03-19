@@ -63,11 +63,25 @@
     box-sizing: border-box;
   }
 
+  * {
+    scroll-behavior: smooth;
+  }
+
   .arabic {
       font-family: "arial","Roboto";
       /* font-weight: 400; */
       /* font-style: normal; */
       direction: rtl
+  }
+
+  .blog {
+    line-height:34px;
+    font-family: "Roboto";
+    font-size:16px
+  }
+
+  blog h2 {
+    font-size:2em ;
   }
   /* a {
     color: var(--color-pink);

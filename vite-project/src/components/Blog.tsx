@@ -11,6 +11,9 @@ export interface blogObj {
 
 }
 
+import parser from "html-react-parser"
+import { Button } from "./ui/button"
+
 
 export function Blog({ image, content, author, publishDate, title, id }: blogObj) {
 
@@ -23,12 +26,12 @@ export function Blog({ image, content, author, publishDate, title, id }: blogObj
             <p className="text-xs opacity-50">{publishDate}</p>
             </div>
             <h2 className="font-bold text-xl "> {title.length >40 ? title.slice(0,40)+"..." : title} </h2>
-            <p className="text-sm opacity-70">
-                {content.slice(0,75)}....
-            </p>
-            <p className="text-blue-400 text-xs opacity-65 mt-2">
+            <>
+                {parser(content.length <70 ? content : content.slice(0,75) +"...")}
+            </>
+            <Button className="mt-2">
                 Read More 
-            </p>
+            </Button>
         </div>
         </Link>
     )

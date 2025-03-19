@@ -5,14 +5,32 @@ import pharmacyImage from "../assets/pharmacy.jpg"
 import presidentImg from "../assets/president.jpg"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import i18n from "@/i18n"
+// import i18n from "@/i18n"
+
+interface PharmacyType {
+    title: string,
+    treatmentTitle: string,
+    preventionTitle: string,
+    additionalServicesTitle: string,
+    treatment: string[],
+    prevention: string[],
+    additionalServices: string[],
+}
+interface PresidentType {
+  name: string,
+  title: string,
+  organization: string,
+  accreditationNumber: string,
+  previousPositions: string[]
+}
+
 export default function AboutUs() {
     const [lang, setLang] = useState<string>("");
     const { t } = useTranslation();
-    const services = t("aboutUsPage.mahadra.services", { returnObjects: true })
-    const traningServices = t("aboutUsPage.traning.services", { returnObjects: true })
-    const pharmacy = t("aboutUsPage.pharmacy", { returnObjects: true })
-    const president = t("aboutUsPage.president", {returnObjects: true})
+    const services = t("aboutUsPage.mahadra.services", { returnObjects: true }) as string[]
+    const traningServices = t("aboutUsPage.traning.services", { returnObjects: true }) as string[]
+    const pharmacy = t("aboutUsPage.pharmacy", { returnObjects: true }) as PharmacyType
+    const president = t("aboutUsPage.president", {returnObjects: true}) as PresidentType
     return (
         <div className="min-h-screen bg-gray-50">
             <Header setLang={setLang} />

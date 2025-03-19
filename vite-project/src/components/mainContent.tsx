@@ -8,31 +8,60 @@ import bankily from "../assets/bankliy.png";
 import masrivi from "../assets/masrivi.png";
 import Card from "./card";
 import logo from "../assets/acap.png"
-import { Droplets, Sailboat, Home, HeartPulse } from 'lucide-react';
-import { MdOutlineLocalPharmacy as Pharmacy } from "react-icons/md";
+// import { Droplets, Sailboat, Home, HeartPulse, Contact } from 'lucide-react';
+// import { MdOutlineLocalPharmacy as Pharmacy } from "react-icons/md";
 import { useTranslation, Trans } from "react-i18next";
 import { Blog, blogObj } from "./Blog";
 import { Heart, School, Book, Users } from 'lucide-react'; // Import different icons for variety
 import { Button } from "./ui/button";
 import donation from "../assets/donation.jpg"
-import i18n from "@/i18n";
 import { Link } from "react-router-dom";
+import ContactSection from "../pages/footer";
+// import parse from "html-react-parser"
+import Projects from "./projects";
+import i18next from "i18next";
+import { PhoneNumber } from "./dashboard";
+// import i18n from "@/i18n";
 
 export default function Main({ lang }: { lang: string }) {
     const { t } = useTranslation();
     const [blogs, setBlogs] = useState([]);
-
+    const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]) ; 
+    // alert(i18next.language)
     useEffect(() => {
         async function loadBlogs() {
-            const res = await fetch("/api/blog").then(res => res.json());
-            setBlogs(res)
+            const res = await fetch(`/api/blog/${i18next.language}`);
+            if(res.ok) {
+                // alert("ok for" + i18next.language)
+                const fetchedBlogs = await res.json() ; 
+                setBlogs(fetchedBlogs) 
+            }
+            else {
+                setBlogs([]) ; 
+            }
             console.log(res)
             // alert(res)
         }
-        loadBlogs()
-    }, [])
-    return (
 
+        async function loadPhoneNumbers() {
+            try {
+                const phoneNumbersRes = await fetch("/api/phone").then(res => res.json())
+                console.log(phoneNumbersRes)
+                if(Array.isArray(phoneNumbersRes) && phoneNumbersRes.length > 0) {
+                    console.log("condition")
+                    setPhoneNumbers(phoneNumbersRes)
+                }
+            } catch(err) {
+                console.log(err)
+            }
+        }
+        loadBlogs();
+        loadPhoneNumbers() ; 
+    }, [])
+
+   
+    return (
+<>
         <main
             style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${girl})`,
@@ -146,7 +175,7 @@ export default function Main({ lang }: { lang: string }) {
             </section>
 
             {/* About Us Section */}
-            <section className="py-20 bg-white">
+            <section id="about-us" className="py-20 bg-white">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <h1 className="font-bold text-4xl md:text-5xl text-center mb-12">
                         <span className="relative">
@@ -191,26 +220,7 @@ export default function Main({ lang }: { lang: string }) {
                             <p className="text-lg/relaxed text-gray-700 mb-6">
                               {t("programs.aboutUs.vision.definition")}
                             </p>
-                            <div className="mt-6">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <span className="text-[#FDB71D] text-sm">01</span>
-                                    </div>
-                                    <span className="font-medium">Poverty Alleviation</span>
-                                </div>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <span className="text-[#FDB71D] text-sm">02</span>
-                                    </div>
-                                    <span className="font-medium">Humanitarian Support</span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-[#151010] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <span className="text-[#FDB71D] text-sm">03</span>
-                                    </div>
-                                    <span className="font-medium">Social Justice</span>
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <div className="relative flex justify-center md:justify-end">
@@ -219,19 +229,22 @@ export default function Main({ lang }: { lang: string }) {
                                 className="w-full max-w-md rounded-lg shadow-lg"
                                 alt="Our Vision"
                             />
-                            <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-[#FDB71D] rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                Make a<br />Difference
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
             </section>
 
-            <h1 className='text-4xl my-9 text-center font-bold mx-auto'>Donation</h1>
+            <h1 id="donation" className='text-4xl  my-9 text-center font-bold mx-auto'>
+                {t("donation.button")}
+            </h1>
             <article className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
-                <Card image={sedad} number="111111111" />
+                {/* <Card image={sedad} number="111111111" />
                 <Card image={bankily} number="111111111" />
-                <Card image={masrivi} number="111111111" />
+                <Card image={masrivi} number="111111111" /> */}
+                {phoneNumbers.map((item) => 
+                <Card image={item.image} number={item.number} />
+                )}
             </article>
 
             <section className="py-16 bg-gray-50">
@@ -239,114 +252,13 @@ export default function Main({ lang }: { lang: string }) {
                     <h2 className="text-4xl font-bold text-center mb-12">
                         {t("projects")}
                     </h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Project 1 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <School />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Building a School</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Construction of a primary school to provide education for 200 children in the village of Nouadhibou.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 25,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Project 2 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <Pharmacy />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Local Pharmacy</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Establishing a community pharmacy to provide essential medications and healthcare services.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 15,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Project 3 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <Droplets />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Clean Water Well</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Digging a well to provide clean water access for up to 500 people in drought-affected areas.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 8,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Project 4 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <Sailboat />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Fishing Boats</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Purchasing boats for local fishermen to improve food security and create sustainable livelihoods.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 12,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Project 5 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <Home />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Community Center</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Building a multi-purpose community center for educational and social activities.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 30,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Project 6 */}
-                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                    <HeartPulse />
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Medical Outreach</h3>
-                                    <p className="text-gray-600 text-sm mb-4">Mobile medical clinic to reach remote villages with basic healthcare.</p>
-                                    <div className="text-amber-500 font-semibold">
-                                        Cost: 18,000 MRU
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <Projects lng={lang}/>
                     </div>
-                </div>
             </section>
-            <section className="py-16 bg-gray-100">
-                <h1 className="text-4xl text-center">Our latest blogs</h1>
+            <section id="blog" className="py-16 bg-gray-100">
+                <h1 className="text-4xl text-center">
+                    {t("activites")}
+                </h1>
                 <div className="blog-container gap-5 md:grid-cols-3 grid grid-cols-1">
 
                     {blogs.map((blog: blogObj) =>
@@ -364,10 +276,10 @@ export default function Main({ lang }: { lang: string }) {
 
 
             </section>
-            <footer>
-                <h1 className="text-4xl font-bold text-center my-4">Contact</h1>
-            </footer>
+            
+        <ContactSection />
         </main>
+        </>
 
 
     )

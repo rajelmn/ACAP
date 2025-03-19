@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+// import { initReactI18next } from "react-i18next";
 // ls
 // import LanguageDetector from "i18next-browser-languagedetector";
 
@@ -23,15 +23,15 @@ import { initReactI18next } from "react-i18next";
 // }
 
 
-interface PharmacySection {
-  title: string;
-  treatmentTitle: string;
-  preventionTitle: string;
-  additionalServicesTitle: string;
-  treatment: string[];
-  prevention: string[];
-  additionalServices: string[];
-}
+// interface PharmacySection {
+//   title: string;
+//   treatmentTitle: string;
+//   preventionTitle: string;
+//   additionalServicesTitle: string;
+//   treatment: string[];
+//   prevention: string[];
+//   additionalServices: string[];
+// }
 
 const resources = {
   en: {
@@ -122,6 +122,7 @@ We have several interventions in place. This includes :`,
         definition: "Helping children shape their own future through education and support",
         donationButton: "Support our case"
       },
+      activites: "Our latest activities",
       project: "Our projects",
       donation: {
         button: "Donate",
@@ -241,7 +242,7 @@ We have several interventions in place. This includes :`,
         },
         
       },
-
+      activites: "notre dernier activites", 
       home: {
         mainMessage: "Le pouvoir de choisir dans",
         smallText: "les mains d'un enfant",
@@ -374,6 +375,7 @@ We have several interventions in place. This includes :`,
         definition: "مساعدة الأطفال على تشكيل مستقبلهم من خلال التعليم والدعم",
         donationButton: "ادعم قضيتنا"
       },
+      activites:"أحدث أنشطتنا",
       projects: "مشاريعنا",
       donation: {
         button: "تبرع",
