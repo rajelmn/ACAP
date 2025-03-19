@@ -111,7 +111,8 @@ app.post("/blog", upload.single('file'), async (req, res) => {
     console.log('the damn image', image)
     const updateBlog = db.prepare("INSERT INTO blog Values(?, ?, ? , ? ,? , ?, ?)")
     updateBlog.run(author, image, content, title, lng, publishDate, id); 
-    res.status(200)
+    res.status(200).json({ success: true, message: "blog added successfully" });
+
   } catch (err) {
     console.log(err)
   }
@@ -127,19 +128,20 @@ app.post("/projects", upload.single('file'), async (req, res) => {
 
     const insertProject = db.prepare("INSERT INTO projects Values(?,?,?,?,?,?,?) ")
     insertProject.run(title, description, publishDate, cost, image, lng, id)
-    res.status(200)
+    res.status(200).json({ success: true, message: "Project added successfully" });
+
 
   } catch (err) {
     console.log(err)
   }
 })
 
-app.put("/blog:id", (req, res) => {
+app.put("/blog:id", (_req, _res) => {
 
 })
 
 
-app.delete("/blog/:id", (req, res) => {
+app.delete("/blog/:id", (req, _res) => {
   try {
     const { id }: { id: string } = req.params;
     const blogDelete = db.prepare("DELETE FROM blog WHERE id = ?")
@@ -149,7 +151,7 @@ app.delete("/blog/:id", (req, res) => {
   }
 })
 
-app.delete("/projects/:id", (req, res) => {
+app.delete("/projects/:id", (req, _res) => {
   try {
     const { id }: { id: string } = req.params;
     console.log("deleting", id)
@@ -160,7 +162,7 @@ app.delete("/projects/:id", (req, res) => {
   }
 })
 
-app.delete("/phone/:id", (req, res) => {
+app.delete("/phone/:id", (req, _res) => {
   try {
     const { id }: { id: string } = req.params;
     const phoneDelete = db.prepare("DELETE FROM blog WHERE id = ?")
