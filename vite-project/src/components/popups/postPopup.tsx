@@ -33,7 +33,7 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                 formData.append('file',imageInput.files[0]);
             }
             formData.append("content", JSON.stringify(reqObj))
-            const res = await fetch("/api/blog", {
+            const res = await fetch("/blog", {
                 method: "POST",
                 body: formData,
             })

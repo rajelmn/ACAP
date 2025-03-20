@@ -5,18 +5,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { FiMail as Mail } from "react-icons/fi";
 
 // Contact icons
-import { Mail, Phone, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Phone, MapPin } from "lucide-react";
 
 const ContactSection = () => {
+  const { t } = useTranslation() ; 
   return (
     <>
       {/* Contact Section */}
       <section id="contact" className="py-16 bg-gray-50">
         <div className="container max-w-5xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {t("contact.title")}
+            </h2>
             
           </div>
 
@@ -82,36 +87,31 @@ const ContactSection = () => {
       </section>
 
       {/* Simplified Footer */}
-      <footer className="bg-gray-900 text-gray-200">
+      <footer className="bg-[#000000] text-gray-200">
         <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Company Info */}
             <div>
-              <h3 className="text-xl font-bold mb-4">Your Blog</h3>
-              <p className="text-gray-400 mb-4">
-                Sharing insights, stories, and knowledge with our readers since 2020.
-              </p>
+              <h3 className="text-xl font-bold mb-4">ACAP (Association Chinguiti Aide Poor)</h3>
+              <div className="text-gray-400 mb-4">
+                CCP:00100/ 13005 /11344280111 / 11 MAURIPOST
+              </div>
+              <div className="flex items-center">
+                <span className="text-normal">
+                <Mail /> 
+                </span>
+                <p className="ml-2">chinguittiong@gmail.com</p>
+              </div>
             </div>
 
             {/* Quick Links */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Home</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">About</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Contact</a></li>
-              </ul>
-            </div>
-
-            {/* Categories */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Categories</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Technology</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Lifestyle</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Business</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Health</a></li>
+                <li><a href="/" className="text-gray-400 hover:text-white transition">Home</a></li>
+                <li><a href="/#about-us" className="text-gray-400 hover:text-white transition">About</a></li>
+                <li><a href="/#blog" className="text-gray-400 hover:text-white transition">Blog</a></li>
+                <li><a href="/#contact" className="text-gray-400 hover:text-white transition">Contact</a></li>
               </ul>
             </div>
           </div>
@@ -119,7 +119,7 @@ const ContactSection = () => {
           <Separator className="my-8 bg-gray-800" />
 
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">© 2025 Your Blog. All rights reserved.</p>
+            <p className="text-gray-400">© 2025  All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
               <a href="#" className="text-gray-400 hover:text-white text-sm">Terms of Service</a>

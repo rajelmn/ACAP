@@ -39,19 +39,19 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/api/phone", {
+                const res = await fetch("/phone", {
                     method: "POST",
                     body: formData,
                 })
     
                 const response = await res.json();
                 if(res.ok) {
-                    const { date }: { date: string } = response; 
                     setLoading(false) ; 
                     setOpen(false); 
-                    setPhoneNumbers((prev: PhoneNumber[]) => 
-                    [...prev, {number: numberField.value, id, date} ]
-                    )
+                    // setPhoneNumbers((prev) => 
+                    // [...prev, {number: +numberField.value, id, date} ]
+                    // )
+                    // setPhoneNumbers((prev: PhoneNumber[]) => [...prev, ])
                 }
                 console.log(response);
             }

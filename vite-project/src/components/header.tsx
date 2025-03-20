@@ -4,6 +4,7 @@ import { TbWorld as World } from "react-icons/tb";
 import SideBar from "./sideBar";
 import { useState } from "react";
 import { RxHamburgerMenu as Menu } from "react-icons/rx";
+import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import {
 
@@ -14,8 +15,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export default function Header({ setLang }: { setLang: (
-    arg: string) => void}) 
+export default function Header({ setLang, showLang }: { setLang: (
+    arg: string) => void, showLang: boolean})
     {
     const [isClickedOnMenu, setIsclickedOnMenu] = useState<boolean>(false)
     const { t, i18n } = useTranslation();
@@ -32,7 +33,7 @@ export default function Header({ setLang }: { setLang: (
 
         <>
             {isClickedOnMenu && <SideBar handleLanguageChange={handleLanguageChange} setIsClickedOnMenu={setIsclickedOnMenu} />}
-            <header className="p-4 bg-white flex items-center justify-between w-screen">
+            <header className={`p-4 bg-white flex items-center justify-between w-screen ${i18next.language === "ar" ? "arabic-lang": ""}`}>
                 <div className="flex items-center mr-2">
                     <div className="flex items-center mr-8">
                         <img src={logo} className="w-12 mr-2" alt="ASAP Logo" />
@@ -61,6 +62,8 @@ export default function Header({ setLang }: { setLang: (
                 </div>
                 <div className="flex items-center space-x-4">
                     <span className="text-xl hidden md:block opacity-80 cursor-pointer">
+                        {showLang && (
+
                         <Select name="language" defaultValue="en" onValueChange={handleLanguageChange}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder={<World />} />
@@ -85,6 +88,7 @@ export default function Header({ setLang }: { setLang: (
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        )}
                     </span>
                     <span
                         onClick={() => setIsclickedOnMenu(true)}

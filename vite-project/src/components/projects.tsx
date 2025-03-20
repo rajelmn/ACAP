@@ -8,7 +8,7 @@ export default function Projects({ lng }: { lng: string }) {
         async function getProjects() {
             try {
                 console.log("running projects")
-                const projctsResponseWithLanguage = await fetch(`/api/projects/${lng}`).then(res => res.json());
+                const projctsResponseWithLanguage = await fetch(`/projects/${lng}`).then(res => res.json());
                 setProjects(projctsResponseWithLanguage)
             } catch(err) {
                 console.log(err)

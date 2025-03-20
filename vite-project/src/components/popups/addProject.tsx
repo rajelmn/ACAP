@@ -48,7 +48,7 @@ export default function AddProject() {
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/api/projects", {
+                const res = await fetch("/projects", {
                     method: "POST",
                     body: formData,
                 })

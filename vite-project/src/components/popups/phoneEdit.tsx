@@ -15,13 +15,10 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import { PhoneNumber } from "../dashboard"
-import { PhoneIncoming } from "lucide-react"
 
-export default function PhoneEdit({setPhoneNumbers , phone} : {setPhoneNumbers: (arg: PhoneNumber[]) => void, phone: PhoneNumber}) {
+export default function PhoneEdit({phone} : { phone: PhoneNumber}) {
     const [loading, setLoading] = useState<boolean>(false) ; 
     const [open ,setOpen] = useState(false); 
-    const [isImageChange , setIsImageChange] = useState<boolean>(false) ; 
-
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
             try {
                 const form = e.target as HTMLFormElement; 
@@ -40,7 +37,7 @@ export default function PhoneEdit({setPhoneNumbers , phone} : {setPhoneNumbers: 
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/api/phone", {
+                const res = await fetch("/phone", {
                     method: "put",
                     body: formData,
                 })
@@ -61,8 +58,8 @@ export default function PhoneEdit({setPhoneNumbers , phone} : {setPhoneNumbers: 
         <>
                     <LoadingOverlay loading={loading} />
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                `<button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>`
+                <DialogTrigger>
+                <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>`
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

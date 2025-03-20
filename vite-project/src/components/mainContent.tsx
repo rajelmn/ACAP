@@ -1,11 +1,6 @@
 // import boys from '../assets/boys.jpg';
 import { useEffect, useState } from "react";
 import girl from "../assets/girl.jpg";
-// import { FaHeart as Heart } from "react-icons/fa";
-// import { IoSchool as School } from "react-icons/io5";
-import sedad from "../assets/sedad.png";
-import bankily from "../assets/bankliy.png";
-import masrivi from "../assets/masrivi.png";
 import Card from "./card";
 import logo from "../assets/acap.png"
 // import { Droplets, Sailboat, Home, HeartPulse, Contact } from 'lucide-react';
@@ -30,7 +25,7 @@ export default function Main({ lang }: { lang: string }) {
     // alert(i18next.language)
     useEffect(() => {
         async function loadBlogs() {
-            const res = await fetch(`/api/blog/${i18next.language}`);
+            const res = await fetch(`/blog/${i18next.language}`);
             if(res.ok) {
                 // alert("ok for" + i18next.language)
                 const fetchedBlogs = await res.json() ; 
@@ -45,7 +40,7 @@ export default function Main({ lang }: { lang: string }) {
 
         async function loadPhoneNumbers() {
             try {
-                const phoneNumbersRes = await fetch("/api/phone").then(res => res.json())
+                const phoneNumbersRes = await fetch("/phone").then(res => res.json())
                 console.log(phoneNumbersRes)
                 if(Array.isArray(phoneNumbersRes) && phoneNumbersRes.length > 0) {
                     console.log("condition")
@@ -57,7 +52,7 @@ export default function Main({ lang }: { lang: string }) {
         }
         loadBlogs();
         loadPhoneNumbers() ; 
-    }, [])
+    }, [i18next.language])
 
    
     return (
@@ -88,9 +83,11 @@ export default function Main({ lang }: { lang: string }) {
                 <p className='mt-4 text-lg md:text-xl max-w-xl text-gray-200'>
                     {t("home.definition")}
                 </p>
+                <a href="/#donation">
                 <button className='px-5 py-2 flex items-center gap-2 rounded-md bg-[#FDB71D] text-black font-medium mt-8 hover:bg-[#e9a813] transition-colors'>
                     {t("home.donationButton")} <Heart className="ml-1" size={18} />
                 </button>
+                </a>
             </div>
 
             {/* Programs Section with Cards */}
@@ -238,7 +235,7 @@ export default function Main({ lang }: { lang: string }) {
             <h1 id="donation" className='text-4xl  my-9 text-center font-bold mx-auto'>
                 {t("donation.button")}
             </h1>
-            <article className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
+            <article dir="rtl" className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
 
                 {phoneNumbers.map((item) => 
                 <Card image={item.image} number={item.number} />

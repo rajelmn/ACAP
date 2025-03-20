@@ -2,9 +2,10 @@
 // import { FaHeart } from "react-icons/fa";
 import { X, Heart, ChevronRight } from 'lucide-react';
 import Lang from './lang';
+import { useTranslation } from 'react-i18next';
 
 export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {setIsClickedOnMenu: (arg: boolean) => void, handleLanguageChange: (arg: string) => void}) {
-
+  const { t } = useTranslation() ; 
   return (
     <>
       {/* Backdrop overlay */}
@@ -28,14 +29,16 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
           {/* Navigation */}
           <nav className="flex-grow py-6">
             <ul className="space-y-1">
-              {/* {['Home', 'About us', 'Blog', 'Contact us'].map((item) => ( */}
-                <li>
+          <li>
+             
                   <a 
                   onClick={() => setIsClickedOnMenu(false)}
                     href="/#"
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>Home</span>
+                    <span>
+                      {t("header.home")}
+                    </span>
                     <ChevronRight size={16} className="text-gray-400" />
                   </a>
                 </li>
@@ -45,7 +48,9 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
                     href="/#about-us"
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>About us</span>
+                    <span>
+                      {t("header.aboutUs")}
+                    </span>
                     <ChevronRight size={16} className="text-gray-400" />
                   </a>
                 </li>
@@ -55,7 +60,9 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
                     href="/#blog"
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>Blog</span>
+                    <span>
+                      {t("header.blog")}
+                    </span>
                     <ChevronRight size={16} className="text-gray-400" />
                   </a>
                 </li>
@@ -65,7 +72,9 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
                     onClick={() => setIsClickedOnMenu(false)}
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <span>Contact us</span>
+                    <span>
+                      {t("header.contact")}
+                    </span>
                     <ChevronRight size={16} className="text-gray-400" />
                   </a>
                 </li>

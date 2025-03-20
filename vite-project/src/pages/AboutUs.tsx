@@ -5,6 +5,7 @@ import pharmacyImage from "../assets/pharmacy.jpg"
 import presidentImg from "../assets/president.jpg"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import ContactSection from "./footer"
 // import i18n from "@/i18n"
 
 interface PharmacyType {
@@ -168,11 +169,7 @@ export default function AboutUs() {
                     </div>
                 </section>
             </main>
-            <footer className="bg-indigo-900 text-white py-6">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <p>© {new Date().getFullYear()} Chinguetti Organization. All rights reserved.</p>
-                </div>
-            </footer>
+            <ContactSection />
         </div>
     )
 }

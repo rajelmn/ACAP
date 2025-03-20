@@ -1,44 +1,11 @@
 import i18n from "i18next";
-// import { initReactI18next } from "react-i18next";
-// ls
-// import LanguageDetector from "i18next-browser-languagedetector";
-
-
-// const resources = {
-//   fr: {
-//     home: {
-//       message: "testing this shit"
-//     }
-//   },
-//   en: {
-//     translation: {
-//       message: "test"
-//     }
-//   },
-//   ar: {
-//     home: {
-//       message: "hey bro"
-//     }
-//   }
-// }
-
-
-// interface PharmacySection {
-//   title: string;
-//   treatmentTitle: string;
-//   preventionTitle: string;
-//   additionalServicesTitle: string;
-//   treatment: string[];
-//   prevention: string[];
-//   additionalServices: string[];
-// }
 
 const resources = {
   en: {
     translation: {
       header: {
-        home: "home",
-        blog: "blog",
+        home: "Home",
+        blog: "Activities",
         aboutUs: "About us",
         contact: "Contact us"
       },
@@ -151,8 +118,11 @@ We have several interventions in place. This includes :`,
             definition: "To be the leading organization in Mauritania in the field of poverty alleviation, by providing humanitarian and sustainable support to needy groups, and contributing to building a more inclusive and socially just society."
           }
         },
-
+        
       },
+      contact: {
+        title: "Get in touch",
+      }
     },
   },
 
@@ -160,7 +130,7 @@ We have several interventions in place. This includes :`,
     translation: {
       header: {
         home: "Accueil",
-        blog: "Blog",
+        blog: "Activites",
         aboutUs: "À propos de nous",
         contact: "Contactez-nous"
       },
@@ -277,6 +247,9 @@ We have several interventions in place. This includes :`,
             "A.C.A.P (Association Chinguitii Aide pour les Pauvres) est une organisation à but non lucratif dédiée à l'amélioration de la vie des personnes dans le besoin. Notre mission est d'apporter espoir et soutien aux communautés défavorisées en fournissant des services essentiels tels que l'éducation, les soins de santé, l'eau potable et des projets de développement durable. Chez A.C.A.P, nous croyons que tout le monde mérite un accès aux besoins de base, à une éducation de qualité et à des soins médicaux appropriés. C'est pourquoi nous travaillons sans relâche pour construire des écoles, des pharmacies et des systèmes d'approvisionnement en eau, garantissant que les communautés vulnérables disposent des ressources nécessaires pour prospérer. Notre équipe est déterminée à créer un avenir meilleur, un projet à la fois. Grâce à la collaboration avec des partenaires locaux et internationaux, nous visons à avoir un impact durable et à élever ceux qui en ont le plus besoin. Rejoignez-nous pour faire la différence – ensemble, nous pouvons bâtir un avenir plus radieux pour tous.",
         },
       },
+      contact: {
+        title: "Contactez-nous"
+      }
     },
   },
 
@@ -285,7 +258,7 @@ We have several interventions in place. This includes :`,
 
       header: {
         home: "الرئيسية",
-        blog: "المدونة",
+        blog: "أنشطة",
         aboutUs: "معلومات عنا",
         contact: "اتصل بنا"
       },
@@ -403,6 +376,9 @@ We have several interventions in place. This includes :`,
           definition:
             "A.C.A.P (جمعية شنقيط للمساعدة للفقراء) هي منظمة غير ربحية مكرسة لتحسين حياة المحتاجين. مهمتنا هي جلب الأمل والدعم للمجتمعات المحرومة من خلال توفير الخدمات الأساسية مثل التعليم والرعاية الصحية والمياه النظيفة ومشاريع التنمية المستدامة. نحن في A.C.A.P نؤمن بأن للجميع الحق في الوصول إلى الضروريات الأساسية والتعليم الجيد والرعاية الطبية المناسبة. لذلك نعمل بلا كلل لبناء المدارس والصيدليات وأنظمة إمداد المياه، مما يضمن أن المجتمعات الضعيفة لديها الموارد التي تحتاجها للازدهار. يلتزم فريقنا بخلق مستقبل أفضل، مشروعًا واحدًا في كل مرة. من خلال التعاون مع شركاء محليين ودوليين، نسعى إلى تحقيق تأثير دائم ورفع مستوى من هم في أمس الحاجة. انضم إلينا في صنع الفرق – معًا، يمكننا بناء مستقبل أكثر إشراقًا للجميع.",
         },
+      },
+      contact: {
+        title: "تواصل معنا"
       },
     },
   }

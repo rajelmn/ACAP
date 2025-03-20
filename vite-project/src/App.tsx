@@ -7,7 +7,7 @@ function App() {
   const [lang, setLang] = useState<string>("");
   return (
     <>
-  <Header setLang={setLang}/>
+  <Header setLang={setLang} showLang={true}/>
   <Main lang={lang}/>
     </>
   )

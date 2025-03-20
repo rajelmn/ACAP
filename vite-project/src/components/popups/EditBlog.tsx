@@ -8,10 +8,8 @@ import { createPortal } from "react-dom";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -43,7 +41,7 @@ export default function EditBlog({ blogObj}: { blogObj: blogObj}) {
                 formData.append('file',imageInput.files[0]);
             }
             formData.append("content", JSON.stringify(reqObj))
-            const res = await fetch("/api/blog", {
+            const res = await fetch("/blog", {
                 method: "put",
                 body: formData,
             })

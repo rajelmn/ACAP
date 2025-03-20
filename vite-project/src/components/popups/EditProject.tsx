@@ -21,6 +21,7 @@ import { Project } from "../dashboard"
 export default function EditProjects({project}: {project: Project}) {
     const [lang, setLang] = useState("");
     const [loading, setLoading] = useState<boolean>(false) ; 
+    const [open , setOpen] = useState<boolean>(false); 
     function handleLanguageChange(language: string) {
         setLang(language)
     }
@@ -50,18 +51,17 @@ export default function EditProjects({project}: {project: Project}) {
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/api/project", {
+                const res = await fetch("/project", {
                     method: "put",
                     body: formData,
                 })
     
                 // const response = await res.json();
-                if(res.ok) setLoading(false); 
-                setTimeout(() => {
-                    setLoading(false); 
-                    alert('timeout')
-                }, 30000)
-                // console.log(response);
+                if(res.ok) {
+                    setLoading(false);
+                    setOpen(false);
+                }
+             
             }
             catch (err) {
                 console.log(err)
@@ -70,7 +70,7 @@ export default function EditProjects({project}: {project: Project}) {
     return (
         <>
                     <LoadingOverlay loading={loading} />
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                 <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
                 </DialogTrigger>

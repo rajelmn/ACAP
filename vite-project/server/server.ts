@@ -5,10 +5,14 @@ import multer from "multer";
 import cors from "cors"
 const PORT = 3000
 const app = express();
-const db = new Database("mydb");
 const upload = multer({ dest: "uploads/" });
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const db = new Database(__dirname+"/mydb");
 
 db.exec(`CREATE TABLE IF NOT EXISTS phone(
   date TEXT NOT NULL,
@@ -48,9 +52,6 @@ app.use(cors());
 
 
 // console.log(data)
-app.get("/", (req, res) => {
-  res.send('hello world');
-});
 
 
 app.get("/phone", (req, res) => {
@@ -181,18 +182,18 @@ app.put("/project", upload.single("file"), async (req, res) => {
     if (req.file?.path) {
       const result = await cloudinary.uploader.upload(req.file.path);
       const icon = result.secure_url || result.url;
+      console.log(icon) ; 
       const updateProject = db.prepare("UPDATE projects SET title=?,description=?,lastUpdate=?,cost=?,icon=?,lng=? WHERE id=?")
 
-      return updateProject.run(title, description, lastUpdate, +cost, icon, lng, id)
+       await updateProject.run(title, description, lastUpdate, +cost, icon, lng, id); 
+       return res.status(200).json({message: "updaated the project succesfuly"})
     }
     const updateProject = db.prepare("UPDATE projects SET title=?,description=?,lastUpdate=?,cost=?,lng=? WHERE id=?");
     updateProject.run(title, description, lastUpdate, +cost, lng, id)
-    console.log(cost.trim().replaceAll(" ", ""));
-    updateProject.run(+cost, id);
-    res.status(200).json({ message: "updated the number succesfuly" })
+    res.status(200).json({ message: "updated the project succesfuly" })
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "error occured while updating the number" })
+    res.status(500).json({ message: "error occured while updating the project" })
   }
 })
 
@@ -282,6 +283,12 @@ app.delete("/phone/:id", (req, res) => {
     console.log(err)
   }
 })
+
+app.use("/images", express.static("images"));
+app.use(express.static("dist"));
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "dist/index.html"));
+});
 
 
 app.listen(PORT, () => {

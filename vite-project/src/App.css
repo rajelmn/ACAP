@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 :root {
     --color-pink: #ee415f;
     --color-green: #58ce97;
@@ -67,15 +68,27 @@
     scroll-behavior: smooth;
   }
 
+  .ProseMirror h1, .blog-page h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .ProseMirror h2 , .blog-page h2{
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  /* etc. */
+
   .arabic {
-      font-family: "arial","Roboto";
-      /* font-weight: 400; */
-      /* font-style: normal; */
-      direction: rtl
+    font-family: 'Almarai', sans-serif;
+    direction: rtl
+  }
+  .arabic-lang {
+    font-family: 'Almarai', sans-serif;
   }
 
   .blog {
     line-height:34px;
+    /* font-family: ; */
     font-family: "Roboto";
     font-size:16px
   }
@@ -87,9 +100,11 @@
     color: var(--color-pink);
   } */
 
-  p {
-    margin: 0;
+  .force-ltr {
+    direction: ltr;
+    unicode-bidi: bidi-override;
   }
+  
 
   p + p {
     margin-top: 2px;

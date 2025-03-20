@@ -130,7 +130,8 @@ export const Tiptap = ({setEditor, blogContent}: {setEditor: (arg: Editor) => vo
           </button>
       </BubbleMenu>
     
-        <EditorContent editor={editor} />
+      <EditorContent editor={editor}  />
+
       </div>
     )
 }

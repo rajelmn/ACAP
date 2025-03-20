@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, Layout, Phone, FileText, LogOut } from 'lucide-react';
 // import { Tiptap } from './Tiptap'; 
 import PostPopup from './popups/postPopup';
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
   async function handleProjectDelete(id: string) {
     try {
-      const projectDeleteRes = await fetch(`/api/projects/${id}`, { method: "delete" })
+      const projectDeleteRes = await fetch(`/projects/${id}`, { method: "delete" })
       console.log("deleting")
       if (projectDeleteRes.ok) {
         console.log("ok")
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
   async function handleBlogDelete(id: string) {
     try {
-        const blogDeleteRes = await fetch(`/api/blog/${id}`, { method: "delete" });
+        const blogDeleteRes = await fetch(`/blog/${id}`, { method: "delete" });
 
         if (blogDeleteRes.ok) {
           setBlogs((prev: blogObj[]) => prev.filter((item: blogObj) => item.id !== id))
@@ -61,7 +61,7 @@ const Dashboard = () => {
 
   async function handlePhoneNumberDelete(id: string) {
         try {
-          const phoneDeleteRes = await fetch(`/api/phone/${id}`, { method: "delete" }).then(res => res.json());
+          const phoneDeleteRes = await fetch(`/phone/${id}`, { method: "delete" }).then(res => res.json());
 
           if (phoneDeleteRes.ok) {
             setPhoneNumbers((prev: PhoneNumber[]) => prev.filter((item: PhoneNumber) => item.id !== id))
@@ -75,8 +75,11 @@ const Dashboard = () => {
   useEffect(() => {
         async function getNumbers() {
           try {
-            const res = await fetch("/api/phone").then(res => res.json());
-            setPhoneNumbers(res);
+            const res = await fetch("/phone").then(res => res.json());
+            console.log(res)
+            if(Array.isArray(res)) {
+              setPhoneNumbers(res);
+            }
             // alert(res)
           } catch (err) {
             console.log(err)
@@ -85,7 +88,7 @@ const Dashboard = () => {
 
         async function getProjects() {
           try {
-            const resProjects = await fetch("/api/projects").then(res => res.json())
+            const resProjects = await fetch("/projects").then(res => res.json())
             setProjects(resProjects)
           }
           catch (err) {
@@ -95,7 +98,7 @@ const Dashboard = () => {
 
         async function getBlogs() {
           try {
-            const resBlogs = await fetch(`/api/blog`).then(res => res.json())
+            const resBlogs = await fetch(`/blog`).then(res => res.json())
             setBlogs(resBlogs)
           }
           catch (err) {
@@ -106,10 +109,6 @@ const Dashboard = () => {
         getProjects();
         getBlogs();
       }, [])
-
-      useEffect(() => {
-        console.log(projects)
-    }, [projects])
 
       // Render content based on active section
       const renderContent = () => {
@@ -175,7 +174,7 @@ const Dashboard = () => {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
-                        {phoneNumbers.map((item, id) => (
+                        {/* {phoneNumbers.map((item, id) => (
                           <tr key={id} className="hover:bg-gray-50 transition-colors">
                             <td className="p-4 font-medium text-gray-900">{item.id}</td>
                             <td className="p-4">{item.number}</td>
@@ -187,9 +186,23 @@ const Dashboard = () => {
                               <Delete 
                               id={item.id}
                               deletefunc={handlePhoneNumberDelete}/>
-                            </td>
+                            </td>?
                           </tr>
-                        ))}
+                        ))} */}
+                      {phoneNumbers.map((item) => 
+                      <tr>
+                       <td className="p-4 font-medium text-gray-900">{item.id}</td>
+                       <td className="p-4">{item.number}</td>
+                       <td className="p-4 text-gray-600">{item.date}</td>
+                       <td className="p-4 text-right">
+                         <PhoneEdit  phone={item}
+                         />
+                               <Delete 
+                              id={item.id}
+                              deletefunc={handlePhoneNumberDelete}/>
+                        </td>
+                       </tr>
+                      )}
                       </tbody>
                     </table>
                   </div>
