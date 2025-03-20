@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "damn": "vite build",
-    "build": "tsc -b && vite build",
+    "start": "npx tsx server/server.ts",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
