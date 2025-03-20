@@ -239,9 +239,7 @@ export default function Main({ lang }: { lang: string }) {
                 {t("donation.button")}
             </h1>
             <article className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
-                {/* <Card image={sedad} number="111111111" />
-                <Card image={bankily} number="111111111" />
-                <Card image={masrivi} number="111111111" /> */}
+
                 {phoneNumbers.map((item) => 
                 <Card image={item.image} number={item.number} />
                 )}

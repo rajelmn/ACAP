@@ -50,7 +50,7 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
                     setLoading(false) ; 
                     setOpen(false); 
                     setPhoneNumbers((prev: PhoneNumber[]) => 
-                    [...prev, {number: numberField.value, id, date, image: "djdj"} ]
+                    [...prev, {number: numberField.value, id, date} ]
                     )
                 }
                 console.log(response);

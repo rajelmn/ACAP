@@ -30,7 +30,7 @@ export default function AddProject() {
                 const titleField = form.elements.namedItem("title") as HTMLInputElement; 
                 const imageInput = form.elements.namedItem("image") as HTMLInputElement; 
                 const descriptionField = form.elements.namedItem("description") as HTMLInputElement; 
-                const costField = form.elements.namedItem("description") as HTMLInputElement; 
+                const costField = form.elements.namedItem("cost") as HTMLInputElement; 
                 e.preventDefault();
                 setLoading(true)
                 const date = new Date();

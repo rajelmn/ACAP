@@ -6,6 +6,7 @@ import {MoonLoader} from "react-spinners";
 import Lang from "../lang";
 import { createPortal } from "react-dom";
 
+
 export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolean) => void }) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
@@ -23,7 +24,7 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                 content: editor?.getHTML(),
                 author: "braims",
                 publishDate: date.toDateString(),
-                id: String(Math.random()),
+                id: crypto.randomUUID(),
                 title: titleField.value,
                 lng: lang || "en",
             };

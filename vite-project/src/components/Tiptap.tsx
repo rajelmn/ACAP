@@ -7,7 +7,7 @@ import { useCallback, useEffect } from "react";
 // const extensions = [StarterKit];
 const content = '<p>Hello World!</p>';
 
-export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
+export const Tiptap = ({setEditor, blogContent}: {setEditor: (arg: Editor) => void, blogContent?: string}) => {
     const editor = useEditor({
        extensions: [
       StarterKit,
@@ -15,7 +15,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
         types: ["heading", "paragraph"],
       }),
     ],
-        content: content
+        content: blogContent || content,
     }) as Editor;
 
     const toggleBold = useCallback(() => {
@@ -49,6 +49,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
             className="menu-button"
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
+            type="button"
           >
             <Icons.RotateLeft />
           </button>
@@ -56,6 +57,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
             className="menu-button"
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
+            type="button"
           >
             <Icons.RotateRight />
           </button>
@@ -63,6 +65,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
           <button
             className={`menu-button ${editor.isActive('bold') ? 'is-active' : ''}`}
             onClick={toggleBold}
+            type="button"
           >
             <Icons.Bold />
           </button>
@@ -71,6 +74,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
           <button
             className={`menu-button ${editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}`}
             onClick={toggleH1}
+            type="button"
           >
             H1
           </button>
@@ -79,6 +83,7 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
           <button
             className={`menu-button ${editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}`}
             onClick={toggleH2}
+            type="button"
           >
             H2
           </button>
@@ -96,12 +101,14 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "is-active" : ""}
+            type="button"
           >
             <Icons.Bold />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={editor.isActive("italic") ? "is-active" : ""}
+            type="button"
           >
             <Icons.Italic />
           </button>
@@ -110,10 +117,12 @@ export const Tiptap = ({setEditor}: {setEditor: (arg: Editor) => void}) => {
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
+            type="button"
           >
             H1
           </button>
           <button
+          type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
           >

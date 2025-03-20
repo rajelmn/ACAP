@@ -5,6 +5,9 @@ import PostPopup from './popups/postPopup';
 import AddProject from './popups/addProject';
 import Delete from './popups/delete';
 import AddPhone from './popups/addPhone';
+import PhoneEdit from './popups/phoneEdit';
+import EditProjects from './popups/EditProject';
+import EditBlog from './popups/EditBlog';
 export interface PhoneNumber {
   number: string,
   // provider: string,
@@ -22,22 +25,14 @@ export interface Project {
   icon: string,
   lastUpdated: string,
 }
-
-export interface Blog {
-  title: string,
-  author: string,
-  publishDate: string,
-  content: string,
-  id: string,
-
-}
+import { blogObj } from './Blog';
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('projects');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [isPosting, setIsPosting] = useState<boolean>(false);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [blogs, setBlogs] = useState<Blog[]>([])
+  const [blogs, setBlogs] = useState<blogObj[]>([])
 
   async function handleProjectDelete(id: string) {
     try {
@@ -57,7 +52,7 @@ const Dashboard = () => {
         const blogDeleteRes = await fetch(`/api/blog/${id}`, { method: "delete" });
 
         if (blogDeleteRes.ok) {
-          setBlogs((prev: Blog[]) => prev.filter((item: Blog) => item.id !== id))
+          setBlogs((prev: blogObj[]) => prev.filter((item: blogObj) => item.id !== id))
         }
       } catch (err) {
         console.log(err)
@@ -148,7 +143,7 @@ const Dashboard = () => {
                             </td>
                             <td className="p-4 text-gray-600">{project.lastUpdated}</td>
                             <td className="p-4 text-right">
-                              <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                               <EditProjects project={project}/>
                               <Delete 
                               id={project.id}
                               deletefunc= {handleProjectDelete}/>
@@ -186,7 +181,9 @@ const Dashboard = () => {
                             <td className="p-4">{item.number}</td>
                             <td className="p-4 text-gray-600">{item.date}</td>
                             <td className="p-4 text-right">
-                              <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                              <PhoneEdit setPhoneNumbers={setPhoneNumbers}
+                              phone={item}
+                              />
                               <Delete 
                               id={item.id}
                               deletefunc={handlePhoneNumberDelete}/>
@@ -233,7 +230,7 @@ const Dashboard = () => {
                             <td className="p-4">{post.author}</td>
                             <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
                             <td className="p-4 text-right">
-                              <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
+                             <EditBlog blogObj={post}/>
                               <Delete 
                               id={post.id}
                               deletefunc={handleBlogDelete}/>
