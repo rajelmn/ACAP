@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "damn": "vite build",
-    "start": "npx tsx server/server.ts",
+     "postinstall": "cd server && npm install",
+     "start": "cd server && npx tsx server.ts",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
