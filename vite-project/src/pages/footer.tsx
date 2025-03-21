@@ -6,8 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { FiMail as Mail } from "react-icons/fi";
-
 // Contact icons
+import Table from "../components/table"
 import { useTranslation } from "react-i18next";
 import { Phone, MapPin } from "lucide-react";
 
@@ -36,15 +36,15 @@ const ContactSection = () => {
                 <CardContent className="space-y-4">
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 mr-3 text-gray-500" />
-                    <p>contact@yourblog.com</p>
+                    <p>contact@acap.net</p>
                   </div>
                   <div className="flex items-center">
                     <Phone className="w-5 h-5 mr-3 text-gray-500" />
-                    <p>+1 (555) 123-4567</p>
+                    <p>+222 36 63 43 27</p>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="w-5 h-5 mr-3 text-gray-500" />
-                    <p>123 Blog Street, Content City</p>
+                    <p>Address: ONG ksar ZRC560A</p>
                   </div>
                 </CardContent>
               </Card>
@@ -114,11 +114,16 @@ const ContactSection = () => {
                 <li><a href="/#contact" className="text-gray-400 hover:text-white transition">Contact</a></li>
               </ul>
             </div>
+            <div>
+          
+            </div>
           </div>
 
           <Separator className="my-8 bg-gray-800" />
 
-          <div className="flex flex-col md:flex-row justify-between items-center">
+              <h3 className="text-lg font-semibold mb-4">Reference bancaires</h3>
+        <Table />
+          <div className="flex my-7 flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400">© 2025  All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white text-sm">Privacy Policy</a>

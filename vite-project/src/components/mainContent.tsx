@@ -40,7 +40,7 @@ export default function Main({ lang }: { lang: string }) {
 
         async function loadPhoneNumbers() {
             try {
-                const phoneNumbersRes = await fetch("/phone").then(res => res.json())
+                const phoneNumbersRes = await fetch("/api/phone").then(res => res.json())
                 console.log(phoneNumbersRes)
                 if(Array.isArray(phoneNumbersRes) && phoneNumbersRes.length > 0) {
                     console.log("condition")
@@ -68,7 +68,6 @@ export default function Main({ lang }: { lang: string }) {
             }}
             className={`${lang === "ar" ? 'arabic' : ''}`}
         >
-            {/* Hero Section */}
             <div className='h-full flex flex-col justify-center text-white items-start px-8 md:px-16 lg:px-24'>
                 <p className='font-bold text-5xl md:text-6xl/tight max-w-2xl'>
                 <Trans>
@@ -195,7 +194,7 @@ export default function Main({ lang }: { lang: string }) {
                             <Link to="/about-us">
                             
                             <Button className="mt-5">
-                                Read more
+                                {t("readmore")}
                             </Button>
                             </Link>
                         </div>
