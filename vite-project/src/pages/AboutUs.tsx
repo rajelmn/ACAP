@@ -34,7 +34,7 @@ export default function AboutUs() {
     const president = t("aboutUsPage.president", {returnObjects: true}) as PresidentType
     return (
         <div className="min-h-screen bg-gray-50">
-            <Header setLang={setLang} />
+            <Header showLang={true} setLang={setLang} />
             <main className="max-w-4xl mx-auto px-4 py-8"
                 style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
             >
@@ -167,6 +167,11 @@ export default function AboutUs() {
                             </ul>
                         </div>
                     </div>
+                </section>
+
+                <section>
+                <h1 className="text-5xl font-bold text-indigo-900 mb-6">Our place</h1>
+                
                 </section>
             </main>
             <ContactSection />
