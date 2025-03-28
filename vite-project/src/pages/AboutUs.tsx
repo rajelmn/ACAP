@@ -6,6 +6,10 @@ import presidentImg from "../assets/president.jpg"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import ContactSection from "./footer"
+import place1 from "../assets/place1.webp"
+import place2 from "../assets/place2.webp"
+import place3 from "../assets/place3.webp"
+import place4 from "../assets/place4.webp"
 // import i18n from "@/i18n"
 
 interface PharmacyType {
@@ -171,7 +175,12 @@ export default function AboutUs() {
 
                 <section>
                 <h1 className="text-5xl font-bold text-indigo-900 mb-6">Our place</h1>
-                
+                <div className="place-container grid grid-cols-1 sm:grid-cols-2 gap-6">
+                 <img className="object-fill rounded-lg" src={place1} alt="" />
+                 <img className="object-fill rounded-lg" src={place2} alt="" />
+                 <img className="object-fill rounded-lg" src={place3} alt="" />
+                 <img className="object-fill rounded-lg" src={place4} alt="" />
+                </div>
                 </section>
             </main>
             <ContactSection />

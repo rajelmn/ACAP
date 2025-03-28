@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import ContactSection from "../pages/footer";
 // import parse from "html-react-parser"
 import Projects from "./projects";
-import SvgQuranVerse from "./svg";
+// import SvgQuranVerse from "./svg";
 import i18next from "i18next";
 import { PhoneNumber } from "./dashboard";
 import { SvgQuranVersePhone } from "./svg";
@@ -232,7 +232,7 @@ export default function Main({ lang }: { lang: string }) {
                         </div>
                     </div>
                 </section>
-                <div className="donation hidden sm:flex my-8 items-center justify-center">
+                {/* <div className="donation hidden sm:flex my-8 items-center justify-center">
                     <div className="">
                         <SvgQuranVerse />
                     </div>
@@ -240,9 +240,9 @@ export default function Main({ lang }: { lang: string }) {
                     <h1 id="donation" className='text-4xl self-end mb-[2px] font-bold'>
                         {t("donation.button")}
                     </h1>
-                </div>
-                <div className="donation sm:hidden my-8">
-                    <div className="w-fit mx-auto">
+                </div> */}
+                <div className="donation my-8">
+                    <div className="">
                         <SvgQuranVersePhone />
                     </div>
                     <h1 id="donation" className='text-4xl text-center mb-[2px] my-1 font-bold'>
