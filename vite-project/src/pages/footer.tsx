@@ -121,7 +121,8 @@ const ContactSection = () => {
 
           <Separator className="my-8 bg-gray-800" />
 
-              <h3 className="text-lg font-semibold mb-4">Reference bancaires</h3>
+              {/* <h3 className="text-lg font-semibold mb-4">Reference bancaires</h3> */}
+
         <Table />
           <div className="flex my-7 flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400">© 2025  All rights reserved.</p>

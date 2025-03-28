@@ -37,9 +37,10 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                 method: "POST",
                 body: formData,
             })
-
-            const response = await res.json();
-            console.log(response);
+            if(!res.ok) {
+                const response = await res.json();
+                alert(JSON.stringify(response))
+            }
             if(res.ok){
                 setLoading(false) ; 
                 setIsPosting(false) ; 

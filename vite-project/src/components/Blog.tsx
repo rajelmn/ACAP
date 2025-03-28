@@ -13,13 +13,15 @@ export interface blogObj {
 
 import parser from "html-react-parser"
 import { Button } from "./ui/button"
+import { useTranslation } from "react-i18next"
+import i18next from "i18next";
 
 
 export function Blog({ image, content, author, publishDate, title, id }: blogObj) {
-
+     const { t } = useTranslation() ; 
     return (
         <Link to={`/blog/${id}`}>
-        <div className="blog p-4 rounded-2xl ">
+        <div className={`blog p-4 rounded-2xl ${i18next.language === "ar" ? "rtl": "ltr"}`}>
             <img src={image} className="rounded-md w-full" alt=""  />
             <div className="blog-header flex justify-between items-center mt-2">
             <p className="text-xs md:text-sm font-semibold text-[#fd9c1d]">{author}</p>
@@ -30,7 +32,7 @@ export function Blog({ image, content, author, publishDate, title, id }: blogObj
                 {parser(content.length <70 ? content : content.slice(0,75) +"...")}
             </>
             <Button className="mt-2">
-                Read More 
+                {t("readmore")}
             </Button>
         </div>
         </Link>

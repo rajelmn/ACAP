@@ -37,17 +37,15 @@ export default function PhoneEdit({phone} : { phone: PhoneNumber}) {
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/phone", {
+                const res = await fetch("/api/phone", {
                     method: "put",
                     body: formData,
                 })
     
-                const response = await res.json();
-                if(res.ok) {
-                    // const { date }: { date: string } = response; 
+                    const response = await res.json();
+                    // alert(JSON.stringify(response))
                     setLoading(false) ; 
                     setOpen(false); 
-                }
                 console.log(response);
             }
             catch (err) {

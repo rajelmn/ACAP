@@ -7,12 +7,13 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import i18next from "i18next"
-
+import { useTranslation } from "react-i18next"
 export default function Lang({ handleLanguageChange}: { handleLanguageChange: (arg: string) => void }) {
+    const {t} = useTranslation() ; 
     return(
         <div className="w-40">
                                 <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Language
+                                   {t("language")}
                                 </label>
                                 <Select name="language" defaultValue={i18next.language} onValueChange={handleLanguageChange}>
                                     <SelectTrigger className="w-full">

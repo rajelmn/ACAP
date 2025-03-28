@@ -9,15 +9,12 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
   const { t } = useTranslation() ; 
   return (
     <>
-      {/* Backdrop overlay */}
       <div className="fixed inset-0  bg-opacity-50 z-40" />
       
-      {/* Sidebar */}
       <aside className={`fixed top-0 right-0 h-full bg-white shadow-lg z-50 w-full md:w-80 ${i18next.language === "ar" ? "arabic": ""} `}>
         <div className="h-full flex flex-col">
-          {/* Header */}
           <div className="bg-amber-300 p-4 flex justify-between items-center">
-            <h2 className="font-bold text-lg">Menu</h2>
+            <h2 className="font-bold text-lg">{t("menu")}</h2>
             <button 
               className="p-1 rounded-full hover:bg-amber-400 transition-colors"
               aria-label="Close menu"
@@ -98,7 +95,9 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
             <a href="/#donation" onClick={() => setIsClickedOnMenu(false)}>
 
             <button className="w-full py-3 bg-amber-500 text-white rounded-md flex items-center justify-center space-x-2 hover:bg-amber-600 transition-colors">
-              <span className="font-medium">Donate Now</span>
+              <span className="font-medium">
+               { t("donation.header") }
+              </span>
               <Heart size={16} />
             </button>
             </a>

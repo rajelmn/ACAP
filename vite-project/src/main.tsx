@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard.tsx';
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import AboutUs from './pages/AboutUs.tsx';
+import LoginPage from './pages/login.tsx';
 import BlogPage from './pages/Blogpage.tsx';
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/blog/:id?", 
     element: <BlogPage />
+  }, 
+  {
+    path: "/login", 
+    element: <LoginPage />
   }
 ]);
 createRoot(document.getElementById("root")!).render(

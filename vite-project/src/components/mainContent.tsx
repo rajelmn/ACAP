@@ -115,9 +115,9 @@ export default function Main({ lang }: { lang: string }) {
                                     </div>
                                 </div>
                                 <div className="mt-4 text-center">
-                                    <a href="#" className="text-[#FDB71D] hover:underline inline-flex items-center">
+                                    {/* <a href="#" className="text-[#FDB71D] hover:underline inline-flex items-center">
                                         Learn more <span className="ml-1">→</span>
-                                    </a>
+                                    </a> */}
                                 </div>
                             </div>
 
@@ -140,7 +140,7 @@ export default function Main({ lang }: { lang: string }) {
                                 </div>
                                 <div className="mt-4 text-center">
                                     <a href="#" className="text-[#FDB71D] hover:underline inline-flex items-center">
-                                        Learn more <span className="ml-1">→</span>
+                                        {/* Learn more <span className="ml-1">→</span> */}
                                     </a>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@ export default function Main({ lang }: { lang: string }) {
                                 </div>
                                 <div className="mt-4 text-center">
                                     <a href="#" className="text-[#FDB71D] hover:underline inline-flex items-center">
-                                        Learn more <span className="ml-1">→</span>
+                                        {/* Learn more <span className="ml-1">→</span> */}
                                     </a>
                                 </div>
                             </div>

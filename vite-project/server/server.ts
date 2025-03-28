@@ -3,11 +3,15 @@ import Database from "better-sqlite3";
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import cors from "cors"
+import session from "express-session"; 
+import bcrypt from "bcrypt"; 
 const PORT = 3000
 const app = express();
 const upload = multer({ dest: "uploads/" });
+
 import path from "path";
 import { fileURLToPath } from "url";
+import { isAuthenticated } from "./isAuthenticated";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,7 +44,10 @@ db.exec(`CREATE TABLE IF NOT EXISTS blog(
   id TEXT PRIMARY KEY
 )`);
 
-
+db.exec(`CREATE TABLE IF NOT EXISTS admin(
+  name TEXT NOT NULL , 
+  password TEXT NOT NULL
+  )`)
 cloudinary.config({
   cloud_name: "dwa2csohq",
   api_key: "665725662135347",
@@ -49,7 +56,16 @@ cloudinary.config({
 
 app.use(express.json());
 app.use(cors());
-
+app.use(session({
+  secret: 'dang',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      httpOnly: true,
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 30
+  }
+}))
 
 // console.log(data)
 
@@ -57,7 +73,6 @@ app.use(cors());
 app.get("/phone", (req, res) => {
   try {
     const getContent = db.prepare("SELECT * FROM phone").all();
-    console.log(getContent, 'phone');
     res.status(200).json(getContent);
 
   } catch (err) {
@@ -67,17 +82,14 @@ app.get("/phone", (req, res) => {
 
 app.get("/projects/:lng?", (req, res) => {
   try {
-    console.log('running')
     const { lng }: { lng: string } = req.params;
     if (!lng) {
       const getProjects = db.prepare("SELECT * FROM projects").all();
-      console.log(getProjects);
       return res.status(200).json(getProjects)
     }
     const getLang = db.prepare("SELECT * FROM projects WHERE lng=?")
     const getLangProjects = getLang.all(lng);
     res.status(200).json(getLangProjects);
-    console.log(getLangProjects, 'lang')
   } catch (err) {
     console.log(err)
   }
@@ -106,8 +118,7 @@ app.get("/blog/:lng?", (req, res) => {
 app.get("/single-blog/:id", (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id, 'blog id')
-
+    
 
     const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?");
     const blog = blogPrep.get(id);
@@ -121,6 +132,30 @@ app.get("/single-blog/:id", (req, res) => {
   }
 })
 
+
+app.post("/login", async (req, res) => {
+  try {
+    const {name, password} = req.body; 
+    console.log("login"); 
+    const dbLogin = db.prepare("SELECT * FROM admin WHERE name = ?")
+    const userInfo = dbLogin.get(name)  ; 
+    if(userInfo) {
+      const result = await bcrypt.compare(password, userInfo.password); 
+      if(!result) return res.status(401).json({errorMessage: "password or username wrong"}) 
+      req.session.loggedIn = true
+      return res.status(200).json({message: "your logged in"})
+    }  else {
+      console.log('wrong username')
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+// middleware for any request besides login
+app.use(isAuthenticated)
+app.get("/test", (req, res) => {
+  res.status(200).json({message: "success bro!"})
+})
 app.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content");
@@ -273,11 +308,12 @@ app.delete("/projects/:id", (req, res) => {
   }
 })
 
-app.delete("/phone/:id", (req, res) => {
+app.delete("/phone/:id", async (req, res) => {
   try {
     const { id }: { id: string } = req.params;
-    const phoneDelete = db.prepare("DELETE FROM blog WHERE id = ?");
-    phoneDelete.run(id);
+    console.log('deleting', id)
+    const phoneDelete = db.prepare("DELETE FROM phone WHERE id = ?");
+    await phoneDelete.run(id);
     res.status(200).json({ message: "phone number deleted succesfuly" })
   } catch (err) {
     console.log(err)

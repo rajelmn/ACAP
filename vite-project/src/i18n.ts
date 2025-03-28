@@ -1,4 +1,5 @@
 import i18n from "i18next";
+import { Languages } from "lucide-react";
 
 const resources = {
   en: {
@@ -121,6 +122,8 @@ We have several interventions in place. This includes :`,
         
       },
       readmore: "read more",
+      Language: "language",
+      menu: "menu",
       contact: {
         title: "Get in touch",
       }
@@ -249,6 +252,8 @@ We have several interventions in place. This includes :`,
         },
       },
       readmore: "lire la suite", 
+      Language: "language",
+      menu: "menu",
       contact: {
         title: "Contactez-nous"
       }
@@ -379,7 +384,9 @@ We have several interventions in place. This includes :`,
             "A.C.A.P (جمعية شنقيط للمساعدة للفقراء) هي منظمة غير ربحية مكرسة لتحسين حياة المحتاجين. مهمتنا هي جلب الأمل والدعم للمجتمعات المحرومة من خلال توفير الخدمات الأساسية مثل التعليم والرعاية الصحية والمياه النظيفة ومشاريع التنمية المستدامة. نحن في A.C.A.P نؤمن بأن للجميع الحق في الوصول إلى الضروريات الأساسية والتعليم الجيد والرعاية الطبية المناسبة. لذلك نعمل بلا كلل لبناء المدارس والصيدليات وأنظمة إمداد المياه، مما يضمن أن المجتمعات الضعيفة لديها الموارد التي تحتاجها للازدهار. يلتزم فريقنا بخلق مستقبل أفضل، مشروعًا واحدًا في كل مرة. من خلال التعاون مع شركاء محليين ودوليين، نسعى إلى تحقيق تأثير دائم ورفع مستوى من هم في أمس الحاجة. انضم إلينا في صنع الفرق – معًا، يمكننا بناء مستقبل أكثر إشراقًا للجميع.",
         },
       },
-      readmore: "",
+      readmore: "اقرأ المزيد",
+      language: "اللغة",
+      menu: "القائمة",
       contact: {
         title: "تواصل معنا"
       },
