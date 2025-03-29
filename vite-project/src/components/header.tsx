@@ -33,7 +33,7 @@ export default function Header({ setLang, showLang }: { setLang: (
 
         <>
             {isClickedOnMenu && <SideBar handleLanguageChange={handleLanguageChange} setIsClickedOnMenu={setIsclickedOnMenu} />}
-            <header className={`p-4 bg-white flex items-center justify-between w-screen ${i18next.language === "ar" ? "arabic-lang": ""}`}>
+            <header className={`p-4 fixed z-50 bg-white flex items-center justify-between w-screen ${i18next.language === "ar" ? "arabic-lang": ""}`}>
                 <div className="flex items-center mr-2">
                     <div className="flex items-center mr-8">
                         <img src={logo} className="w-12 mr-2" alt="ASAP Logo" />

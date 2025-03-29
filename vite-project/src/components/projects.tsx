@@ -23,7 +23,7 @@ export default function Projects({ lng }: { lng: string }) {
                                 <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
                                     <div className="flex items-start gap-4">
                                         <div className="p-3 bg-amber-100 rounded-lg text-amber-500">
-                                            <img src={item.icon} className="max-w-10 object-fill" alt="" />
+                                            <img loading="lazy" src={item.icon} className="max-w-10 object-fill" alt="" />
                                         </div>
         
                                         <div>

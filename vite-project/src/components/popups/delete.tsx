@@ -16,7 +16,6 @@ export default function Delete({ deletefunc, id }: { deletefunc: (id: string) =>
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                {/* <Button variant="outline">Show Dialog</Button> */}
                 <button className="text-red-600 hover:text-red-800 font-medium transition-colors">Delete</button>
             </AlertDialogTrigger>
             <AlertDialogContent>

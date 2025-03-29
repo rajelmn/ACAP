@@ -57,6 +57,7 @@ export default function AboutUs() {
                     </h2>
                     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
                         <img
+                            loading="lazy"
                             src={chingiti}
                             className="w-full h-64 object-cover object-center"
                             alt="Chinguetti Mahadra School"
@@ -95,6 +96,7 @@ export default function AboutUs() {
                     <div className="bg-white rounded-xl shadow-md overflow-hidden">
                         <img
                             src={education}
+                            loading="lazy"
                             className="w-full h-64 object-cover object-center"
                             alt="Training and Education"
                         />
@@ -116,6 +118,7 @@ export default function AboutUs() {
                     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
                         <img
                             src={pharmacyImage}
+                            loading="lazy"
                             className="w-full h-64 object-cover object-center"
                             alt="Pharmacy Services"
                         />
@@ -153,6 +156,7 @@ export default function AboutUs() {
                             <img
                                 src={presidentImg}
                                 alt="President"
+                                loading="lazy"
                                 className="w-full rounded-lg shadow-md"
                             />
                             <div className="mt-4">
@@ -176,10 +180,10 @@ export default function AboutUs() {
                 <section>
                 <h1 className="text-5xl font-bold text-indigo-900 mb-6">Our place</h1>
                 <div className="place-container grid grid-cols-1 sm:grid-cols-2 gap-6">
-                 <img className="object-fill rounded-lg" src={place1} alt="" />
-                 <img className="object-fill rounded-lg" src={place2} alt="" />
-                 <img className="object-fill rounded-lg" src={place3} alt="" />
-                 <img className="object-fill rounded-lg" src={place4} alt="" />
+                 <img loading="lazy" className="object-fill rounded-lg" src={place1} alt="" />
+                 <img loading="lazy" className="object-fill rounded-lg" src={place2} alt="" />
+                 <img loading="lazy" className="object-fill rounded-lg" src={place3} alt="" />
+                 <img loading="lazy" className="object-fill rounded-lg" src={place4} alt="" />
                 </div>
                 </section>
             </main>

@@ -16,7 +16,7 @@ import {
 import { blogObj } from "../Blog";
 
 
-export default function EditBlog({ blogObj}: { blogObj: blogObj}) {
+export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj, setErrorMessage:(arg: string) => void}) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
     const [loading, setLoading] = useState<boolean>(false); 
@@ -46,15 +46,17 @@ export default function EditBlog({ blogObj}: { blogObj: blogObj}) {
                 body: formData,
             })
 
-            const response = await res.json();
-            console.log(response);
-            if(res.ok){
-                setLoading(false) ; 
-                // setIsPosting(false) ; 
-            };
+            if(!res.ok) {
+                const response = await res.json();
+                setErrorMessage(response.error)
+            }
+          
         }
         catch (err) {
             console.log(err)
+        }
+        finally {
+            setLoading(false); 
         }
     }
 
@@ -75,7 +77,7 @@ export default function EditBlog({ blogObj}: { blogObj: blogObj}) {
                 </DialogHeader>
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
-                <Lang handleLanguageChange={handleLanguageChange}/>
+                <Lang lang={blogObj.lng} handleLanguageChange={handleLanguageChange}/>
 
                     <div className="mb-6">
                         <label htmlFor="post-title" className="block text-sm font-medium text-gray-700 mb-1">

@@ -7,7 +7,7 @@ import Lang from "../lang";
 import { createPortal } from "react-dom";
 
 
-export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolean) => void }) {
+export default function PostPopup({ setIsPosting, setErrorMessage }: { setIsPosting: (arg: boolean) => void , setErrorMessage: (arg: string) => void}) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
     const [loading, setLoading] = useState<boolean>(false); 
@@ -33,21 +33,23 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                 formData.append('file',imageInput.files[0]);
             }
             formData.append("content", JSON.stringify(reqObj))
-            const res = await fetch("/blog", {
+            const res = await fetch("/api/blog", {
                 method: "POST",
                 body: formData,
             })
             if(!res.ok) {
                 const response = await res.json();
-                alert(JSON.stringify(response))
+                console.log(response)
+                setErrorMessage(response.error)
             }
-            if(res.ok){
-                setLoading(false) ; 
-                setIsPosting(false) ; 
-            };
+            
         }
         catch (err) {
-            console.log(err)
+            console.log(err); 
+        }
+        finally {
+            setLoading(false) ; 
+            setIsPosting(false)
         }
     }
 
@@ -67,15 +69,12 @@ export default function PostPopup({ setIsPosting }: { setIsPosting: (arg: boolea
                         className="text-gray-500 hover:text-gray-700 transition-colors"
                     // onClick={onClose}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
+                   
                     </button>
                 </div>
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
-                <Lang handleLanguageChange={handleLanguageChange}/>
+                <Lang lang={null} handleLanguageChange={handleLanguageChange} />
 
                     <div className="mb-6">
                         <label htmlFor="post-title" className="block text-sm font-medium text-gray-700 mb-1">

@@ -18,7 +18,7 @@ import { LoadingOverlay } from "./postPopup"
 import Lang from "../lang"
 import { Project } from "../dashboard"
 
-export default function EditProjects({project}: {project: Project}) {
+export default function EditProjects({project, setErrorMessage}: {project: Project, setErrorMessage: (arg:string) => void}) {
     const [lang, setLang] = useState("");
     const [loading, setLoading] = useState<boolean>(false) ; 
     const [open , setOpen] = useState<boolean>(false); 
@@ -56,15 +56,18 @@ export default function EditProjects({project}: {project: Project}) {
                     body: formData,
                 })
     
-                // const response = await res.json();
-                if(res.ok) {
-                    setLoading(false);
-                    setOpen(false);
+                if(!res.ok) {
+                    const response = await res.json();
+                    setErrorMessage(response.error)
                 }
              
             }
             catch (err) {
                 console.log(err)
+            }
+            finally {
+                setLoading(false)
+                setOpen(false)
             }
         }
     return (
@@ -82,7 +85,7 @@ export default function EditProjects({project}: {project: Project}) {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleFormSubmit}>
-                     <Lang handleLanguageChange={handleLanguageChange} />
+                     <Lang lang={project.lng} handleLanguageChange={handleLanguageChange} />
                         <div className="grid gap-4 py-4">
                             <div className="flex items-center gap-4 p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50">
                                 <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full">

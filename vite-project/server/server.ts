@@ -12,6 +12,9 @@ const upload = multer({ dest: "uploads/" });
 import path from "path";
 import { fileURLToPath } from "url";
 import { isAuthenticated } from "./isAuthenticated";
+import dotenv from "dotenv"
+dotenv.config();
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +25,8 @@ db.exec(`CREATE TABLE IF NOT EXISTS phone(
   date TEXT NOT NULL,
   number INTEGER NOT NULL,
   image TEXT, 
-  id TEXT PRIMARY KEY
+  id TEXT PRIMARY KEY, 
+  app TEXT NOT NULL
 )`);
 
 db.exec(`CREATE TABLE IF NOT EXISTS projects(
@@ -50,14 +54,14 @@ db.exec(`CREATE TABLE IF NOT EXISTS admin(
   )`)
 cloudinary.config({
   cloud_name: "dwa2csohq",
-  api_key: "665725662135347",
-  api_secret: "Y2Dk2D6ExFwjQjLNlo9i6DLbq_0",
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
 app.use(express.json());
 app.use(cors());
 app.use(session({
-  secret: 'dang',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -153,7 +157,7 @@ app.post("/login", async (req, res) => {
 })
 // middleware for any request besides login
 app.use(isAuthenticated)
-app.get("/test", (req, res) => {
+app.get("/validate-user", (req, res) => {
   res.status(200).json({message: "success bro!"})
 })
 app.post("/blog", upload.single('file'), async (req, res) => {
@@ -164,30 +168,33 @@ app.post("/blog", upload.single('file'), async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
     console.log('the damn image', image)
+  // if(title === "dang") throw new Error("dang isnt a proper title for a blog")
     const updateBlog = db.prepare("INSERT INTO blog Values(?, ?, ? , ? ,? , ?)")
     updateBlog.run( image, content, title, lng, publishDate, id);
     res.status(200).json({ success: true, message: "blog added successfully" });
 
   } catch (err) {
-    console.log(err)
+    console.log(err); 
+    res.status(500).json({error: err.message})
   }
 })
 
 app.post("/phone", upload.single('file'), async (req, res) => {
   try {
-    const { phone, id }: { phone: number, id: string } = JSON.parse(req.body.content)
+    const { phone, id , app}: { phone: number, id: string , app: string } = JSON.parse(req.body.content)
     // console.log(phone, id, req.file.path)
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
     const date = (new Date()).toLocaleString().split(",")[0];
     // console.log(date, 'date')
 
-    const insertPhone = db.prepare("INSERT INTO Phone Values(?, ?, ?, ?)")
-    console.log(date, phone, image, id)
-    await insertPhone.run(date, phone, image, id)
+    const insertPhone = db.prepare("INSERT INTO Phone Values(?, ?, ?, ?, ?)")
+    console.log(date, phone, image, id, app)
+    await insertPhone.run(date, phone, image, id, app)
     res.status(200).json({ message: "uploaded number succesfuly" })
   } catch (err) {
-    console.log(err)
+    console.log(err); 
+    res.status(500).json({error: err})
   }
 })
 
@@ -205,7 +212,8 @@ app.post("/projects", upload.single('file'), async (req, res) => {
 
 
   } catch (err) {
-    console.log(err)
+    console.log(err); 
+    res.status(500).json({error: err})
   }
 })
 
@@ -228,7 +236,7 @@ app.put("/project", upload.single("file"), async (req, res) => {
     res.status(200).json({ message: "updated the project succesfuly" })
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "error occured while updating the project" })
+    res.status(500).json({error: err})
   }
 })
 
@@ -249,20 +257,12 @@ app.put("/phone", upload.single('file'), async (req, res) => {
     res.status(200).json({ message: "updated the number succesfuly" })
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "error occured while updating the number" })
+    res.status(500).json({error: err})
   }
 })
 
 app.put("/blog", upload.single("file"), async (req, res) => {
   try {
-    // console.log(req.body.content, "content");db.exec(`CREATE TABLE IF NOT EXISTS blog(
-//   image TEXT NOT NULL,
-//   content TEXT NOT NULL,
-//   title TEXT NOT NULL,
-//   lng TEXT NOT NULL, 
-//   publishDate TEXT NOT NULL,
-//   id TEXT PRIMARY KEY
-// )`);
 
     const { content, title, lng, id } = JSON.parse(req.body.content);
     const publishDate = (new Date()).toLocaleString().split(',')[0]; 
@@ -282,6 +282,7 @@ console.log("Rows updated:", results.changes);
     res.status(200).json({ success: true, message: "blog updated successfully" });
   } catch(err) {
     console.log(err)
+    res.status(500).json({error: err})
   }
 })
 
@@ -293,6 +294,7 @@ app.delete("/blog/:id", (req, res) => {
     res.status(200).json({ message: "deleted" })
   } catch (err) {
     console.log(err)
+    res.status(500).json({error: err})
   }
 })
 
@@ -305,6 +307,7 @@ app.delete("/projects/:id", (req, res) => {
     res.status(200).json({ message: "deleted" })
   } catch (err) {
     console.log(err)
+    res.status(500).json({error: err})
   }
 })
 
@@ -317,6 +320,7 @@ app.delete("/phone/:id", async (req, res) => {
     res.status(200).json({ message: "phone number deleted succesfuly" })
   } catch (err) {
     console.log(err)
+    res.status(500).json({error: err})
   }
 })
 

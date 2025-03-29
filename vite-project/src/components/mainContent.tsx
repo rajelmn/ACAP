@@ -27,7 +27,7 @@ export default function Main({ lang }: { lang: string }) {
     // alert(i18next.language)
     useEffect(() => {
         async function loadBlogs() {
-            const res = await fetch(`/api/blog/${i18next.language}`);
+            const res = await fetch(`/blog/${i18next.language}`);
             if (res.ok) {
                 // alert("ok for" + i18next.language)
                 const fetchedBlogs = await res.json();
@@ -42,7 +42,7 @@ export default function Main({ lang }: { lang: string }) {
 
         async function loadPhoneNumbers() {
             try {
-                const phoneNumbersRes = await fetch("/api/phone").then(res => res.json())
+                const phoneNumbersRes = await fetch("/phone").then(res => res.json())
                 console.log(phoneNumbersRes)
                 if (Array.isArray(phoneNumbersRes) && phoneNumbersRes.length > 0) {
                     console.log("condition")
@@ -184,7 +184,7 @@ export default function Main({ lang }: { lang: string }) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2  gap-8 items-center">
                             <div className="relative">
-                                <img src={logo} className="w-full h-auto rounded-lg shadow-lg" alt="Our Mission" />
+                                <img loading="lazy" src={logo} className="w-full h-auto rounded-lg shadow-lg" alt="Our Mission" />
 
                             </div>
 
@@ -223,6 +223,7 @@ export default function Main({ lang }: { lang: string }) {
 
                             <div className="relative flex justify-center md:justify-end">
                                 <img
+                                    loading="lazy"
                                     src={donation}
                                     className="w-full max-w-md rounded-lg shadow-lg"
                                     alt="Our Vision"

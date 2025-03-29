@@ -16,15 +16,16 @@ import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import { PhoneNumber } from "../dashboard"
 
-export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: PhoneNumber[]) => void}) {
+export default function AddPhone({setPhoneNumbers, setErrorMessage} : {setPhoneNumbers: (arg: PhoneNumber[]) => void, setErrorMessage: (arg: string) => void}) {
     const [loading, setLoading] = useState<boolean>(false) ; 
-    const [open ,setOpen] = useState(false)
+    const [open ,setOpen] = useState(false); 
 
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
             try {
                 const form = e.target as HTMLFormElement; 
                 const imageInput = form.elements.namedItem("image") as HTMLInputElement; 
-                const numberField = form.elements.namedItem("number") as HTMLInputElement; 
+                const numberField = form.elements.namedItem("number") as HTMLInputElement;
+                const appFieild = form.elements.namedItem("app") as HTMLInputElement;  
                 const id: string = crypto.randomUUID()
                 e.preventDefault();
                 setLoading(true)
@@ -32,6 +33,7 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
                 const reqObj = {
                    phone: numberField.value, 
                    id,
+                   app: appFieild.value
                 };
                 const formData = new FormData();
                 if(imageInput.files && imageInput.files.length > 0 ) {
@@ -45,8 +47,10 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
                 })
     
                if(!res.ok) {
-                        const response = await res.json();
-                        alert(JSON.stringify(response))
+                if(!res.ok) {
+                    const response = await res.json();
+                    setErrorMessage(response.error)
+                }
                     
                 }
                 // console.log(response);
@@ -113,7 +117,19 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
                                     className="col-span-3"
                                 />
                             </div>
-
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">
+                                    application:
+                                </Label>
+                                <Input
+                                    id="phone-number"
+                                
+                                    name="app"
+                                    placeholder="exemple: bankily"
+                                    className="col-span-3"
+                                    required
+                                />
+                            </div>
                            </div>
                         <DialogFooter>
                             <Button type="submit">Save changes</Button>
@@ -124,6 +140,5 @@ export default function AddPhone({setPhoneNumbers} : {setPhoneNumbers: (arg: Pho
         </>
     )
 }
-
 
 

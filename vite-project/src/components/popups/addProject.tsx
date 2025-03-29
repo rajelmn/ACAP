@@ -17,7 +17,7 @@ import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import Lang from "../lang"
 
-export default function AddProject() {
+export default function AddProject({setErrorMessage} : {setErrorMessage: (arg: string) => void}) {
     const [lang, setLang] = useState("");
     const [loading, setLoading] = useState<boolean>(false) ; 
     function handleLanguageChange(language: string) {
@@ -53,12 +53,16 @@ export default function AddProject() {
                     body: formData,
                 })
     
-                const response = await res.json();
-                if(res.ok) setLoading(false)
-                console.log(response);
+                if(!res.ok) {
+                    const response = await res.json();
+                    setErrorMessage(response.error)
+                }
             }
             catch (err) {
                 console.log(err)
+            }
+            finally {
+                setLoading(false)
             }
         }
     return (
@@ -78,7 +82,7 @@ export default function AddProject() {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleFormSubmit}>
-                     <Lang handleLanguageChange={handleLanguageChange} />
+                     <Lang lang={null} handleLanguageChange={handleLanguageChange} />
                         <div className="grid gap-4 py-4">
                             <div className="flex items-center gap-4 p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50">
                                 <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full">
