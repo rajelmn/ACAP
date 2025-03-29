@@ -5,16 +5,16 @@ import multer from "multer";
 import cors from "cors"
 import session from "express-session"; 
 import bcrypt from "bcrypt"; 
+import dotenv from "dotenv"
 const PORT = 3000
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
+dotenv.config() ; 
 import path from "path";
 import { fileURLToPath } from "url";
 import { isAuthenticated } from "./isAuthenticated";
-import dotenv from "dotenv"
-dotenv.config();
-
+import { error } from "console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -155,6 +155,12 @@ app.post("/login", async (req, res) => {
     console.log(err)
   }
 })
+
+app.use("/images", express.static("images"));
+app.use(express.static("dist"));
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "dist/index.html"));
+});
 // middleware for any request besides login
 app.use(isAuthenticated)
 app.get("/validate-user", (req, res) => {
@@ -323,12 +329,6 @@ app.delete("/phone/:id", async (req, res) => {
     res.status(500).json({error: err})
   }
 })
-
-app.use("/images", express.static("images"));
-app.use(express.static("dist"));
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "dist/index.html"));
-});
 
 
 app.listen(PORT, () => {
