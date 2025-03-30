@@ -24,7 +24,7 @@ export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj
         console.log(editor?.getHTML())
         try {
             e.preventDefault();
-            alert("blog update is running here")
+            // alert("blog update is running here")
             setLoading(true)
             const form = e.target as HTMLFormElement; 
             const titleField = form.elements.namedItem("title") as HTMLInputElement; 
@@ -41,7 +41,7 @@ export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj
                 formData.append('file',imageInput.files[0]);
             }
             formData.append("content", JSON.stringify(reqObj))
-            const res = await fetch("/blog", {
+            const res = await fetch("/api/blog", {
                 method: "put",
                 body: formData,
             })

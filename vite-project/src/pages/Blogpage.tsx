@@ -11,7 +11,7 @@ export default function BlogPage() {
     useEffect(() => {
         async function getCurrentBlog() {
             try {
-                const res = await fetch(`/single-blog/${id}`).then(res => res.json());
+                const res = await fetch(`/api/single-blog/${id}`).then(res => res.json());
                 console.log(res)
                 setBlog(res)
             } catch(err) {

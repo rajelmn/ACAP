@@ -51,7 +51,7 @@ export default function EditProjects({project, setErrorMessage}: {project: Proje
                 }
                 // formData.append('file', e.target.image.files[0]);
                 formData.append("content", JSON.stringify(reqObj))
-                const res = await fetch("/project", {
+                const res = await fetch("/api/project", {
                     method: "put",
                     body: formData,
                 })

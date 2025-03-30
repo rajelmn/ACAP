@@ -83,7 +83,7 @@ export default function SideBar({setIsClickedOnMenu , handleLanguageChange}: {se
                     // onClick={() => setIsClickedOnMenu(false)}
                     className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
-                    <Lang handleLanguageChange={handleLanguageChange}/>
+                    <Lang lang={null} handleLanguageChange={handleLanguageChange}/>
                     {/* <ChevronRight size={16} className="text-gray-400" /> */}
                   </a>
               </li>

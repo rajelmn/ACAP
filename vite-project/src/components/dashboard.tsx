@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   async function handleProjectDelete(id: string) {
     try {
-      const projectDeleteRes = await fetch(`/projects/${id}`, { method: "delete" })
+      const projectDeleteRes = await fetch(`/api/projects/${id}`, { method: "delete" })
       console.log("deleting")
       if (projectDeleteRes.ok) {
         console.log("ok")
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   async function handleBlogDelete(id: string) {
     try {
-      const blogDeleteRes = await fetch(`/blog/${id}`, { method: "delete" });
+      const blogDeleteRes = await fetch(`/api/blog/${id}`, { method: "delete" });
 
       if (blogDeleteRes.ok) {
         setBlogs((prev: blogObj[]) => prev.filter((item: blogObj) => item.id !== id))
@@ -75,7 +75,7 @@ const Dashboard = () => {
 
   async function handlePhoneNumberDelete(id: string) {
     try {
-      const phoneDeleteRes = await fetch(`/phone/${id}`, { method: "delete" }).then(res => res.json());
+      const phoneDeleteRes = await fetch(`/api/phone/${id}`, { method: "delete" }).then(res => res.json());
       // alert("deleting")
       if (phoneDeleteRes.ok) {
         // alert("ok")
@@ -90,7 +90,7 @@ const Dashboard = () => {
   useEffect(() => {
     async function getNumbers(): Promise<void> {
       try {
-        const res = await fetch("/phone").then(res => res.json());
+        const res = await fetch("/api/phone").then(res => res.json());
         console.log(res)
         if (Array.isArray(res)) {
           setPhoneNumbers(res);
@@ -103,7 +103,7 @@ const Dashboard = () => {
 
     async function validateUser(): Promise<void> {
       try {
-        const res = await fetch("/validate-user");
+        const res = await fetch("/api/validate-user");
         if (!res.ok) {
           navigate("/login")
         }
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
     async function getProjects(): Promise<void> {
       try {
-        const resProjects = await fetch("/projects").then(res => res.json())
+        const resProjects = await fetch("/api/projects").then(res => res.json())
         setProjects(resProjects)
       }
       catch (err) {
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
     async function getBlogs() {
       try {
-        const resBlogs = await fetch(`/blog`).then(res => res.json())
+        const resBlogs = await fetch(`/api/blog`).then(res => res.json())
         setBlogs(resBlogs)
       }
       catch (err) {

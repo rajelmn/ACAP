@@ -27,7 +27,7 @@ export default function Main({ lang }: { lang: string }) {
     // alert(i18next.language)
     useEffect(() => {
         async function loadBlogs() {
-            const res = await fetch(`/blog/${i18next.language}`);
+            const res = await fetch(`/api/blog/${i18next.language}`);
             if (res.ok) {
                 // alert("ok for" + i18next.language)
                 const fetchedBlogs = await res.json();
@@ -42,7 +42,7 @@ export default function Main({ lang }: { lang: string }) {
 
         async function loadPhoneNumbers() {
             try {
-                const phoneNumbersRes = await fetch("/phone").then(res => res.json())
+                const phoneNumbersRes = await fetch("/api/phone").then(res => res.json())
                 console.log(phoneNumbersRes)
                 if (Array.isArray(phoneNumbersRes) && phoneNumbersRes.length > 0) {
                     console.log("condition")
