@@ -89,13 +89,13 @@ router.post("/login", async (req, res) => {
     console.log(err)
   }
 })
+router.use(isAuthenticated)
 
 router.get("/validate-user", (req, res) => {
   res.status(200).json({message: "success bro!"})
 })
 
 
-router.use(isAuthenticated)
 router.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content");
