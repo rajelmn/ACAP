@@ -63,8 +63,8 @@ export default function LoginPage() {
                         </Button>
                     </div>
 
-                </form>
                 {errorMessage.length && (<p className="text-[#d41818] mt-3">{errorMessage}</p>)}
+                </form>
             </div>
         </div>
     )
