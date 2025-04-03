@@ -16,7 +16,7 @@ const ContactSection = () => {
   return (
     <>
       {/* Contact Section */}
-      <section id="contact" className="py-16 bg-gray-50">
+      <section id="contact" className="py-16 bg-gray-50" dir="ltr">
         <div className="container max-w-5xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -87,7 +87,7 @@ const ContactSection = () => {
       </section>
 
       {/* Simplified Footer */}
-      <footer className="bg-[#000000] text-gray-200">
+      <footer className="bg-[#000000] text-gray-200" dir="ltr">
         <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Company Info */}

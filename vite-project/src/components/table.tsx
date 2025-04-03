@@ -28,7 +28,7 @@ import {
         <>
       {invoices.map((invoice) => 
         <>
-        <p>reference banquaire pour {invoice.target}: </p>
+        <p>Reference Bancaire pour {invoice.target}: </p>
         <Table className="text-white my-4">
           {/* <TableCaption>les coordonnes banquaire</TableCaption> */}
           {/* <TableHeader> */}
@@ -49,15 +49,18 @@ import {
               </TableRow>
           </TableBody>
         </Table>
-        </>
-    ) 
-      }
-       <p className="text-xs">
+        <div className="my-3">
+          <p className="text-xs">
         Adresse SWIFT BMCI: MBICMRMRXXX
         </p>
         <p className="text-xs">
           Adresse SWIFT (en €) : NTXFRPPXXX
         </p>
+        </div>
+        </>
+    ) 
+      }
+
 
       </>
     )

@@ -43,6 +43,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         pharmacy: {
+          header: "Assocation's Pharmacy",
           title: "Treatment Aspect",
           treatmentTitle: "Medication Provision",
           preventionTitle: "Preventive Aspect",
@@ -124,6 +125,7 @@ We have several interventions in place. This includes :`,
       readmore: "read more",
       Language: "language",
       menu: "menu",
+      location: "Our location", 
       contact: {
         title: "Get in touch",
       }
@@ -175,6 +177,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         pharmacy: {
+          header: "Pharmacy de l'Assocation",
           title: "Aspect thérapeutique",
           treatmentTitle: "Fourniture de médicaments",
           preventionTitle: "Aspect préventif",
@@ -254,6 +257,7 @@ We have several interventions in place. This includes :`,
       readmore: "lire la suite", 
       Language: "language",
       menu: "menu",
+      location: "Notre emplacement", 
       contact: {
         title: "Contactez-nous"
       }
@@ -309,6 +313,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         pharmacy: {
+          header: "صيدلية الجمعية",
           title: "الجانب العلاجي",
           treatmentTitle: "توفير الدواء",
           preventionTitle: "الجانب الوقائي",
@@ -387,6 +392,7 @@ We have several interventions in place. This includes :`,
       readmore: "اقرأ المزيد",
       language: "اللغة",
       menu: "القائمة",
+      location: "موقعنا", 
       contact: {
         title: "تواصل معنا"
       },

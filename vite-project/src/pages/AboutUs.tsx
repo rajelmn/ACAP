@@ -13,6 +13,7 @@ import place4 from "../assets/place4.webp"
 // import i18n from "@/i18n"
 
 interface PharmacyType {
+    header: string,
     title: string,
     treatmentTitle: string,
     preventionTitle: string,
@@ -114,7 +115,9 @@ export default function AboutUs() {
                 </section>
 
                 <section>
-                    <h1 className="text-5xl font-bold text-indigo-900 mb-6">Association's pharmacy</h1>
+                    <h1 className="text-5xl font-bold text-indigo-900 mb-6">
+                        {pharmacy.header}
+                    </h1>
                     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
                         <img
                             src={pharmacyImage}
@@ -178,7 +181,9 @@ export default function AboutUs() {
                 </section>
 
                 <section>
-                <h1 className="text-5xl font-bold text-indigo-900 mb-6">Our place</h1>
+                <h1 className="text-5xl font-bold text-indigo-900 mb-6">
+                    {t("location")}
+                </h1>
                 <div className="place-container grid grid-cols-1 sm:grid-cols-2 gap-6">
                  <img loading="lazy" className="object-fill rounded-lg" src={place1} alt="" />
                  <img loading="lazy" className="object-fill rounded-lg" src={place2} alt="" />

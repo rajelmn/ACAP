@@ -17,7 +17,7 @@ import Projects from "./projects";
 // import SvgQuranVerse from "./svg";
 import i18next from "i18next";
 import { PhoneNumber } from "./dashboard";
-import { SvgQuranVersePhone } from "./svg";
+import QuranVerse from "./svg";
 // import i18n from "@/i18n";
 
 export default function Main({ lang }: { lang: string }) {
@@ -94,7 +94,9 @@ export default function Main({ lang }: { lang: string }) {
                 {/* Programs Section with Cards */}
                 <section className="py-20 bg-[#151010]">
                     <div className="container mx-auto px-4 max-w-6xl">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">Our <span className="text-[#FDB71D]">Programs</span></h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+                            Our <span className="text-[#FDB71D]">Programs</span>
+                            </h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             {/* Education Card */}
@@ -244,9 +246,9 @@ export default function Main({ lang }: { lang: string }) {
                 </div> */}
                 <div className="donation my-8">
                     <div className="">
-                        <SvgQuranVersePhone />
+                        <QuranVerse />
                     </div>
-                    <h1 id="donation" className='text-4xl text-center mb-[2px] my-1 font-bold'>
+                    <h1 id="donation" className='text-4xl text-center mb-[2px] sm:my-1 font-bold'>
                         {t("donation.button")}
                     </h1>
                 </div>
