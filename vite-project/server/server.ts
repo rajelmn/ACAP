@@ -58,7 +58,7 @@ cloudinary.config({
 app.use(express.json());
 app.use(cors());
 app.use(session({
-  secret: process.env.SECRET,
+  secret: 'secret',
   resave: false,
   saveUninitialized: false,
   cookie: {

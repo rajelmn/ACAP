@@ -86,6 +86,19 @@ const Dashboard = () => {
     }
   }
 
+  async function handleLogout() {
+    try {
+      const res = await fetch("/api/logout") ; 
+      if(!res.ok) {
+        const resObj = await res.json() ; 
+        throw new Error(resObj)
+      }
+      navigate("/login")
+    } catch(err) {
+      console.log(err) ; 
+    } 
+  }
+
 
   useEffect(() => {
     async function getNumbers(): Promise<void> {
@@ -361,7 +374,7 @@ const Dashboard = () => {
             </ul>
           </nav>
           <div className="absolute bottom-0 left-0">
-            <button className="flex items-center p-4 text-red-300 hover:bg-gray-700 transition-colors">
+            <button className="flex items-center p-4 text-red-300 hover:bg-gray-700 transition-colors" onClick={handleLogout}>
               <LogOut size={20} />
               {!sidebarCollapsed && <span className="ml-4">Logout</span>}
             </button>

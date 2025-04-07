@@ -96,6 +96,16 @@ router.get("/validate-user", (req, res) => {
 })
 
 
+router.get("/logout" , (req, res) => {
+  try {
+    req.session.destroy(); 
+    res.status(200).json({message: "logged out succesfuly"})
+  } catch(err) {
+    console.log(err); 
+    res.status(500).json({message: "error while logout"})
+  }
+})
+
 router.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content");

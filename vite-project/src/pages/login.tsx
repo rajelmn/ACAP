@@ -45,7 +45,7 @@ export default function LoginPage() {
             <div className="grow flex justify-center items-center">
                 <form 
                 onSubmit={handleFormSubmit}
-                
+                onChange={() => setErrorMessage("")}
                 className="max-w-[80vw] sm:w-[42vw] sm:p-12 p-5 rounded-lg my-6 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] ">
                     <h1 className="font-sembold text-center text-3xl ">Login </h1>
                     <div className="space-y-4 self-center">
@@ -63,7 +63,8 @@ export default function LoginPage() {
                         </Button>
                     </div>
 
-                {errorMessage.length && (<p className="text-[#d41818] mt-3">{errorMessage}</p>)}
+                {/* {errorMessage} */}
+                {errorMessage && (<p className="text-[#d41818] mt-3">{errorMessage}</p>)}
                 </form>
             </div>
         </div>
