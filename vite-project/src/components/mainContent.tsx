@@ -12,12 +12,13 @@ import { Button } from "./ui/button";
 import donation from "../assets/donation.jpg"
 import { Link } from "react-router-dom";
 import ContactSection from "../pages/footer";
+import quran from "../assets/quran.png"
 // import parse from "html-react-parser"
 import Projects from "./projects";
 // import SvgQuranVerse from "./svg";
 import i18next from "i18next";
 import { PhoneNumber } from "./dashboard";
-import QuranVerse from "./svg";
+
 // import i18n from "@/i18n";
 
 export default function Main({ lang }: { lang: string }) {
@@ -64,6 +65,8 @@ export default function Main({ lang }: { lang: string }) {
                     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${girl})`,
                     width: '100%',
                     height: '85vh',
+                    maxHeight: "1200px",
+                    objectFit: "fill",
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundAttachment: 'fixed',
@@ -235,25 +238,31 @@ export default function Main({ lang }: { lang: string }) {
                         </div>
                     </div>
                 </section>
-                {/* <div className="donation hidden sm:flex my-8 items-center justify-center">
-                    <div className="">
-                        <SvgQuranVerse />
-                    </div>
+                <section className="py-20 bg-gray-50">
+                    <div className="container mx-auto px-4 max-w-6xl">
 
-                    <h1 id="donation" className='text-4xl self-end mb-[2px] font-bold'>
-                        {t("donation.button")}
-                    </h1>
-                </div> */}
-                <div className="donation my-8">
-                    <div className="">
-                        <QuranVerse />
-                    </div>
-                    <h1 id="donation" className='text-4xl text-center mb-[2px] sm:my-1 font-bold'>
-                        {t("donation.button")}
-                    </h1>
-                </div>
-                <article dir="rtl" className='grid grid-cols-1 [@media(min-width:880px)]:grid-cols-3'>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div className="md:order-last">
+                                <p className="text-lg/relaxed text-gray-700 mb-6">
+                                    {t("quran")}
+                                </p>
 
+                            </div>
+
+                            <div className="relative order-1 flex justify-center md:justify-start">
+                                <img
+                                    loading="lazy"
+                                    src={quran}
+                                    className="w-full max-w-md rounded-lg shadow-lg"
+                                    alt="quran verse"
+                                />
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                    <h1 className="my-6 text-2xl font-semibold text-center">Donation</h1>
+                <article dir="rtl" className='grid grid-cols-1  bg-gray-50 [@media(min-width:880px)]:grid-cols-3'>
                     {phoneNumbers.map((item) =>
                         <Card image={item.image} number={item.number} />
                     )}

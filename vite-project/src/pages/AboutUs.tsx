@@ -10,6 +10,7 @@ import place1 from "../assets/place1.webp"
 import place2 from "../assets/place2.webp"
 import place3 from "../assets/place3.webp"
 import place4 from "../assets/place4.webp"
+import i18n from "@/i18n"
 // import i18n from "@/i18n"
 
 interface PharmacyType {
@@ -31,12 +32,13 @@ interface PresidentType {
 }
 
 export default function AboutUs() {
-    const [lang, setLang] = useState<string>("");
+    const [lang, setLang] = useState<string>(i18n.language);
     const { t } = useTranslation();
     const services = t("aboutUsPage.mahadra.services", { returnObjects: true }) as string[]
     const traningServices = t("aboutUsPage.traning.services", { returnObjects: true }) as string[]
     const pharmacy = t("aboutUsPage.pharmacy", { returnObjects: true }) as PharmacyType
     const president = t("aboutUsPage.president", {returnObjects: true}) as PresidentType
+    // alert(lang)
     return (
         <div className="min-h-screen bg-gray-50">
             <Header showLang={true} setLang={setLang} />

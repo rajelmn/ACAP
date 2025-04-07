@@ -64,7 +64,7 @@ export default function Header({ setLang, showLang }: { setLang: (
                     <span className="text-xl hidden md:block opacity-80 cursor-pointer">
                         {showLang && (
 
-                        <Select name="language" defaultValue="en" onValueChange={handleLanguageChange}>
+                        <Select name="language" defaultValue={i18n.language} onValueChange={handleLanguageChange}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder={<World />} />
                                 {/* <World /> */}

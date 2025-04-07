@@ -126,6 +126,7 @@ We have several interventions in place. This includes :`,
       Language: "language",
       menu: "menu",
       location: "Our location", 
+      quran: "Never will you attain the good [reward] until you spend [in the way of Allah] from that which you love. And whatever you spend – indeed, Allah is Knowing of it.",
       contact: {
         title: "Get in touch",
       }
@@ -258,6 +259,7 @@ We have several interventions in place. This includes :`,
       Language: "language",
       menu: "menu",
       location: "Notre emplacement", 
+      quran: "Vous n'atteindrez la bonté [récompense] que si vous dépensez [dans le chemin d'Allah] de ce que vous aimez. Et tout ce que vous dépensez – en vérité, Allah en a connaissance.", 
       contact: {
         title: "Contactez-nous"
       }
@@ -393,6 +395,8 @@ We have several interventions in place. This includes :`,
       language: "اللغة",
       menu: "القائمة",
       location: "موقعنا", 
+      quran:`اجعل من تبرعك خطوة نحو البر، وصدقة تبقى لك حين لا ينفع مال ولا بنون.
+امنح مما تحب، ولو قليلًا، فالله عليمٌ بما تنفق.`,
       contact: {
         title: "تواصل معنا"
       },
