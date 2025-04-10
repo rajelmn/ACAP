@@ -33,11 +33,9 @@ export default function AddProject({setErrorMessage} : {setErrorMessage: (arg: s
                 const costField = form.elements.namedItem("cost") as HTMLInputElement; 
                 e.preventDefault();
                 setLoading(true)
-                const date = new Date();
                 const reqObj = {
                     description: descriptionField.value,
                     cost: +costField.value,
-                    publishDate: date.toDateString(),
                     id: String(Math.random()),
                     title: titleField.value,
                     lng: lang || "en",

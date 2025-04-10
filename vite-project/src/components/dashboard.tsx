@@ -9,6 +9,7 @@ import PhoneEdit from './popups/phoneEdit';
 import EditProjects from './popups/EditProject';
 import EditBlog from './popups/EditBlog';
 import { useNavigate } from 'react-router';
+import parse from "html-react-parser"
 import { MdCancel as Cancel } from "react-icons/md";
 import {
   Dialog,
@@ -270,7 +271,6 @@ const Dashboard = () => {
                     <tr>
                       <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Title</th>
                       <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Author</th>
                       <th className="text-left p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Publish Date</th>
                       <th className="text-right p-4 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
@@ -280,11 +280,12 @@ const Dashboard = () => {
                       <tr key={post.id} className="hover:bg-gray-50 transition-colors">
                         <td className="p-4 font-medium text-gray-900">{post.title}</td>
                         <td className="p-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium`}>
-                            {post.title}
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium `} >
+                          {post.lng === "ar" ? "...": ""}
+                           {post.content.replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "").slice(0,47)}
+                           {post.lng !== "ar" ? "...": ""}
                           </span>
                         </td>
-                        <td className="p-4">{post.author}</td>
                         <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
                         <td className="p-4 text-right">
                           <EditBlog setErrorMessage={setErrorMessage
@@ -373,8 +374,8 @@ const Dashboard = () => {
               </li>
             </ul>
           </nav>
-          <div className="absolute bottom-0 left-0">
-            <button className="flex items-center p-4 text-red-300 hover:bg-gray-700 transition-colors" onClick={handleLogout}>
+          <div className="absolute bottom-0 cursor-pointer left-0">
+            <button className="flex items-center p-4 text-red-300 cursor-pointer transition-colors" onClick={handleLogout}>
               <LogOut size={20} />
               {!sidebarCollapsed && <span className="ml-4">Logout</span>}
             </button>

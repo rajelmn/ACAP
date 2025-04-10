@@ -29,7 +29,10 @@ export function Blog({ image, content, author, publishDate, title, id }: blogObj
             </div>
             <h2 className="font-bold text-xl "> {title.length >40 ? title.slice(0,40)+"..." : title} </h2>
             <>
-                {parser(content.length <70 ? content : content.slice(0,76) +"...")}
+                {/* {parser(content.length <70 ? content : content.slice(0,76) +"...")} */}
+                <p className="text-xs">
+                {content.length > 70 ? content.slice(0, 69).replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "") : content.replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "") }
+                </p>
             </>
             <Button className="mt-2">
                 {t("readmore")}

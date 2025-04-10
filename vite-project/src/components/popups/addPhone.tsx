@@ -29,7 +29,6 @@ export default function AddPhone({setPhoneNumbers, setErrorMessage} : {setPhoneN
                 const id: string = crypto.randomUUID()
                 e.preventDefault();
                 setLoading(true)
-                // const date = new Date();
                 const reqObj = {
                    phone: numberField.value, 
                    id,

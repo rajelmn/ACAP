@@ -19,11 +19,9 @@ export default function PostPopup({ setIsPosting, setErrorMessage }: { setIsPost
             const form = e.target as HTMLFormElement; 
             const titleField = form.elements.namedItem("title") as HTMLInputElement; 
             const imageInput = form.elements.namedItem("image") as HTMLInputElement; 
-            const date = new Date();
+     
             const reqObj = {
                 content: editor?.getHTML(),
-                author: "braims",
-                publishDate: date.toDateString(),
                 id: crypto.randomUUID(),
                 title: titleField.value,
                 lng: lang || "en",

@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 const router = express.Router() ; 
 import bcrypt from "bcrypt"
 const upload = multer({ dest: "uploads/" });
+import {format} from "date-fns"
 import {db} from "./server"
 import { isAuthenticated } from "./isAuthenticated";
 
@@ -110,7 +111,8 @@ router.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content");
     // const theFile = req.file as 
-    const { content, publishDate, title, lng, id } = JSON.parse(req.body.content);
+    const publishDate = format(new Date() , 'DD/MM/YYYY')
+    const { content, title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
     console.log('the damn image', image)
@@ -131,7 +133,7 @@ router.post("/phone", upload.single('file'), async (req, res) => {
     // console.log(phone, id, req.file.path)
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
-    const date = (new Date()).toLocaleString().split(",")[0];
+    const date = format(new Date() , "DD/MM/YYYY")
     // console.log(date, 'date')
 
     const insertPhone = db.prepare("INSERT INTO Phone Values(?, ?, ?, ?, ?)")
@@ -146,7 +148,8 @@ router.post("/phone", upload.single('file'), async (req, res) => {
 
 router.post("/projects", upload.single('file'), async (req, res) => {
   try {
-    const { description, cost, publishDate, title, lng, id } = JSON.parse(req.body.content);
+    const publishDate = format(new Date() , "DD/MM/YYYY")
+    const { description, cost,  title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     console.log(req.body.content)
     const image = result.secure_url || result.url;
@@ -163,11 +166,20 @@ router.post("/projects", upload.single('file'), async (req, res) => {
   }
 })
 
+router.post("/send-mail", (req, res) =>  {
+  try {
+    const {email , name, message} = req.body ; 
+
+  } catch(err) {
+    console.log(err) ; 
+  }
+})
+
 router.put("/project", upload.single("file"), async (req, res) => {
   try {
     const { cost, id, description, title, lng } = JSON.parse(req.body.content);
     console.log(req.body.content);
-    const lastUpdate = (new Date()).toLocaleString().split(",")[0]
+    const lastUpdate = format(new Date() , "DD/MM/YYYY")
     if (req.file?.path) {
       const result = await cloudinary.uploader.upload(req.file.path);
       const icon = result.secure_url || result.url;
@@ -211,7 +223,7 @@ router.put("/blog", upload.single("file"), async (req, res) => {
   try {
 
     const { content, title, lng, id } = JSON.parse(req.body.content);
-    const publishDate = (new Date()).toLocaleString().split(',')[0]; 
+    const publishDate = format(new Date() , "DD/MM/YYYY")
     console.log(content, 'the blog content')
     if(req.file?.path) {
 

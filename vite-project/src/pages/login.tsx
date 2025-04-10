@@ -1,10 +1,10 @@
 import Header from "@/components/header"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Navigate, useNavigate } from "react-router";
-import { ReactFormState } from "react-dom/client";
+import { useNavigate } from "react-router";
+
 import React from "react"
 export default function LoginPage() {
     const [lang, setLang] = useState(""); 
@@ -38,6 +38,23 @@ export default function LoginPage() {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        async function validateUser(): Promise<void> {
+            try {
+              const res = await fetch("/api/validate-user");
+              if (res.ok) {
+                return navigate("/admin")
+              }
+             
+              // alert(JSON.stringify(resObj)) 
+            } catch (err) {
+              console.log(err)
+            }
+          }
+          
+          validateUser() ; 
+    }, []) 
     return (    
         <div className="h-screen flex flex-col">
             <Header setLang={setLang} showLang={false} />

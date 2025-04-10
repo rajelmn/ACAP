@@ -10,7 +10,7 @@ import { Blog, blogObj } from "./Blog";
 import { Heart, School, Book, Users } from 'lucide-react'; // Import different icons for variety
 import { Button } from "./ui/button";
 import donation from "../assets/donation.jpg"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ContactSection from "../pages/footer";
 import quran from "../assets/quran.png"
 // import parse from "html-react-parser"
@@ -23,6 +23,7 @@ import { PhoneNumber } from "./dashboard";
 
 export default function Main({ lang }: { lang: string }) {
     const { t } = useTranslation();
+    const location = useLocation() ; 
     const [blogs, setBlogs] = useState([]);
     const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
     // alert(i18next.language)
@@ -57,6 +58,15 @@ export default function Main({ lang }: { lang: string }) {
         loadPhoneNumbers();
     }, [i18next.language])
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search) ; 
+        if(params.get("scrollTo") === "donation") {
+            const el = document.getElementById("donation") ; 
+            if(!el) return ; 
+            el.scrollIntoView({behavior: "smooth"}) 
+        }
+    }, [location])
+
 
     return (
         <>
@@ -74,17 +84,17 @@ export default function Main({ lang }: { lang: string }) {
                 className={`${lang === "ar" ? 'arabic' : ''}`}
             >
                 <div className='h-full flex flex-col justify-center text-white items-start px-8 md:px-16 lg:px-24'>
-                    <p className='font-bold text-5xl md:text-6xl/tight max-w-2xl'>
-                        <Trans>
+                    <div className='font-bold text-5xl md:text-6xl/tight max-w-2xl'>
+                        <div>
                             <span>
-                                {t("home.mainMessage")}
+                                {t("home.mainMessage")} {lang === 'ar' && <br />}
                             </span>
-                            <span className='font-thin'>
+                            <span className='font-thin' style={{fontWeight: "200"}}>
                                 {' '} {t("home.smallText")}
                             </span>
-                        </Trans>
-                    </p>
-                    <p className='mt-4 text-lg md:text-xl max-w-xl text-gray-200'>
+                        </div>
+                    </div>
+                    <p className={`mt-4 text-lg md:text-xl max-w-xl text-gray-200 ${lang === 'ar' && "mt-8"}`}>
                         {t("home.definition")}
                     </p>
                     <a href="/#donation">
@@ -261,8 +271,10 @@ export default function Main({ lang }: { lang: string }) {
                         </div>
                     </div>
                 </section>
-                    <h1 className="my-6 text-2xl font-semibold text-center">Donation</h1>
-                <article dir="rtl" className='grid grid-cols-1  bg-gray-50 [@media(min-width:880px)]:grid-cols-3'>
+                    <h1 id="donation" className="my-6 text-2xl font-semibold text-center">
+                        {t("donation.header")}
+                    </h1>
+                <article  dir="rtl" className='grid grid-cols-1  bg-gray-50 [@media(min-width:880px)]:grid-cols-3'>
                     {phoneNumbers.map((item) =>
                         <Card image={item.image} number={item.number} />
                     )}

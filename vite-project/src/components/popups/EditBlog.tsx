@@ -130,13 +130,7 @@ export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj
                     <DialogFooter>
 
                     <div className="flex justify-end pt-4">
-                        <button
-                            type="button"
-    
-                            className="px-4 cursor-pointer py-1 mr-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
-                        >
-                            Cancel
-                        </button>
+
 
                                 <Button type="submit">Publish Post</Button>
                             

@@ -25,7 +25,7 @@ const ContactSection = () => {
             
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <form  className="grid md:grid-cols-2 gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
               <Card>
@@ -82,7 +82,7 @@ const ContactSection = () => {
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </form>
         </div>
       </section>
 
