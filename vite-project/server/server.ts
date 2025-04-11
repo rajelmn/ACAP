@@ -72,7 +72,7 @@ app.use(session({
 app.use("/images", express.static("images"));
 app.use(express.static("dist"));
 
-app.use("/", router)
+app.use("/api", router)
 
 app.get("*", (_req, res) => {
   console.log("sending", __dirname)

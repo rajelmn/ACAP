@@ -10,9 +10,38 @@ import { FiMail as Mail } from "react-icons/fi";
 import Table from "../components/table"
 import { useTranslation } from "react-i18next";
 import { Phone, MapPin } from "lucide-react";
+import React from "react";
 
 const ContactSection = () => {
   const { t } = useTranslation() ; 
+  const handleFormSubmission = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault() ; 
+      const name = e.target.name.value ;
+      const email = e.target.email.value; 
+      const message = e.target.message.value; 
+      console.log(name, email,message)
+      const res = await fetch("/api/send-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          },
+        body : JSON.stringify({
+          name, 
+          email,
+          message
+        })
+      })
+      if(!res.ok) {
+        // alert("error when submitting the form"); 
+        const errObj = await res.json()  ;
+
+        console.log(JSON.stringify(errObj))
+      }
+    } catch(err) {
+      console.log(err) ; 
+    }
+  }
   return (
     <>
       {/* Contact Section */}
@@ -25,7 +54,7 @@ const ContactSection = () => {
             
           </div>
 
-          <form  className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
               <Card>
@@ -57,7 +86,7 @@ const ContactSection = () => {
                 <CardDescription>We'll respond as soon as possible</CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                <form onSubmit={handleFormSubmission} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
                     <Input id="name" name="name" placeholder="Your name" />
@@ -82,7 +111,7 @@ const ContactSection = () => {
                 </form>
               </CardContent>
             </Card>
-          </form>
+          </div>
         </div>
       </section>
 

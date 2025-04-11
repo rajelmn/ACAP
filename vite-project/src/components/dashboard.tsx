@@ -34,7 +34,7 @@ export interface Project {
   cost: number,
   description: string,
   icon: string,
-  lastUpdated: string,
+  lastUpdate: string,
 }
 import { blogObj } from './Blog';
 const Dashboard = () => {
@@ -45,10 +45,13 @@ const Dashboard = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogs, setBlogs] = useState<blogObj[]>([]);
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  
-  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>(""); 
 
+  const arabicBlogs = blogs.filter(item => item.lng === 'ar')
+  const englishBlogs = blogs.filter(item => item.lng === 'em')
+  const frenshBlogs = blogs.filter(item => item.lng === 'fr')
+  const navigate = useNavigate();
+  console.log(blogs)
   async function handleProjectDelete(id: string) {
     try {
       const projectDeleteRes = await fetch(`/api/projects/${id}`, { method: "delete" })
@@ -185,7 +188,7 @@ const Dashboard = () => {
                             {project.cost} MRU
                           </span>
                         </td>
-                        <td className="p-4 text-gray-600">{project.lastUpdated}</td>
+                        <td className="p-4 text-gray-600">{project.lastUpdate}</td>
                         <td className="p-4 text-right">
                           <EditProjects setErrorMessage={setErrorMessage} project={project} />
                           <Delete
@@ -287,6 +290,7 @@ const Dashboard = () => {
                           </span>
                         </td>
                         <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
+                 
                         <td className="p-4 text-right">
                           <EditBlog setErrorMessage={setErrorMessage
 
@@ -413,4 +417,13 @@ const Dashboard = () => {
   )
 };
 
-export default Dashboard;
+export default Dashboard
+
+
+
+// function BlogRow() {
+
+//   return(
+
+//   )
+// }

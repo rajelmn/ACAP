@@ -7,14 +7,27 @@ const upload = multer({ dest: "uploads/" });
 import {format} from "date-fns"
 import {db} from "./server"
 import { isAuthenticated } from "./isAuthenticated";
+import nodemailer from 'nodemailer'; 
+import bodyparser from "body-parser" ; 
+import dotenv from 'dotenv'; 
+dotenv.config();
 
-
-
+router.use(bodyparser.json()) ; 
+// router.use(express.json())  ;
+const transporter = nodemailer.createTransport({
+  host: "mail.acap-mr.com",
+  port: 465,
+  secure: true, // Port 465 uses SSL
+  auth: {
+    user: process.env.USER,
+    pass: process.env.PASSWORD
+  }
+});
 router.get("/phone", (req, res) => {
   try {
     const getContent = db.prepare("SELECT * FROM phone").all();
     res.status(200).json(getContent);
-
+    
   } catch (err) {
     console.log(err)
   }
@@ -38,9 +51,9 @@ router.get("/projects/:lng?", (req, res) => {
 
 router.get("/blog/:lng?", (req, res) => {
   try {
-
+    
     const { lng }: { lng?: string } = req.params;
-
+    
     if (!lng) {
       const getBlogs = db.prepare("SELECT * FROM blog").all();
       return res.status(200).json(getBlogs)
@@ -48,7 +61,7 @@ router.get("/blog/:lng?", (req, res) => {
     const getBlogBylang = db.prepare("SELECT * FROM blog WHERE lng = ?");
     const langBlogs = getBlogBylang.all(lng)
     if (!(langBlogs.length > 0)) return res.status(401).json({ message: `no blogs for ${lng} language` })
-    res.status(200).json(langBlogs)
+      res.status(200).json(langBlogs)
   }
   catch (err) {
     console.log(err)
@@ -59,7 +72,7 @@ router.get("/single-blog/:id", (req, res) => {
   try {
     const { id } = req.params;
     
-
+    
     const blogPrep = db.prepare("SELECT * FROM blog WHERE id=?");
     const blog = blogPrep.get(id);
     if (!blog) {
@@ -90,6 +103,30 @@ router.post("/login", async (req, res) => {
     console.log(err)
   }
 })
+router.post("/send-mail", (req, res) =>  {
+  try {
+    console.log(req.body)
+    const {email , name, message} = req.body
+    console.log(name, email, '\n', message)
+
+const mailOptions = {
+  from: email, // Sender's email (could be from form input)
+  to: "rajel@acap-mr.com", // Your webmail address where the form submissions should go
+  subject: "Contact Form Submission", // Subject of the email
+  text: `Message: ${message}`, // The body of the email
+  };
+  
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+  return res.status(500).send({ success: false, error });
+  }
+  res.status(200).send({ success: true, info });
+  });
+  } catch(err) {
+    console.log(err) ; 
+  }
+})
 router.use(isAuthenticated)
 
 router.get("/validate-user", (req, res) => {
@@ -111,7 +148,7 @@ router.post("/blog", upload.single('file'), async (req, res) => {
   try {
     console.log(req.body.content, "content");
     // const theFile = req.file as 
-    const publishDate = format(new Date() , 'DD/MM/YYYY')
+    const publishDate = format(new Date() , 'dd/mm/yyyy')
     const { content, title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
@@ -133,7 +170,7 @@ router.post("/phone", upload.single('file'), async (req, res) => {
     // console.log(phone, id, req.file.path)
     const result = await cloudinary.uploader.upload(req.file.path);
     const image = result.secure_url || result.url;
-    const date = format(new Date() , "DD/MM/YYYY")
+    const date = format(new Date() , "dd/mm/yyyy")
     // console.log(date, 'date')
 
     const insertPhone = db.prepare("INSERT INTO Phone Values(?, ?, ?, ?, ?)")
@@ -148,7 +185,7 @@ router.post("/phone", upload.single('file'), async (req, res) => {
 
 router.post("/projects", upload.single('file'), async (req, res) => {
   try {
-    const publishDate = format(new Date() , "DD/MM/YYYY")
+    const publishDate = format(new Date() , "dd/mm/yyyy")
     const { description, cost,  title, lng, id } = JSON.parse(req.body.content);
     const result = await cloudinary.uploader.upload(req.file.path);
     console.log(req.body.content)
@@ -166,20 +203,12 @@ router.post("/projects", upload.single('file'), async (req, res) => {
   }
 })
 
-router.post("/send-mail", (req, res) =>  {
-  try {
-    const {email , name, message} = req.body ; 
-
-  } catch(err) {
-    console.log(err) ; 
-  }
-})
 
 router.put("/project", upload.single("file"), async (req, res) => {
   try {
     const { cost, id, description, title, lng } = JSON.parse(req.body.content);
     console.log(req.body.content);
-    const lastUpdate = format(new Date() , "DD/MM/YYYY")
+    const lastUpdate = format(new Date() , "dd/mm/yyyy")
     if (req.file?.path) {
       const result = await cloudinary.uploader.upload(req.file.path);
       const icon = result.secure_url || result.url;
@@ -223,7 +252,7 @@ router.put("/blog", upload.single("file"), async (req, res) => {
   try {
 
     const { content, title, lng, id } = JSON.parse(req.body.content);
-    const publishDate = format(new Date() , "DD/MM/YYYY")
+    const publishDate = format(new Date() , "dd/mm/yyyy")
     console.log(content, 'the blog content')
     if(req.file?.path) {
 

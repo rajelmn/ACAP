@@ -68,6 +68,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         president: {
+          presidentTitle: "Association's President",
           name: "Engineer Mohammed Ahmed Ammar",
           title: "President of Chinguetti Organization for Helping the Poor",
           organization: "Chinguetti Organization for Helping the Poor",
@@ -81,15 +82,17 @@ We have several interventions in place. This includes :`,
             "Certified judicial expert in institution and project management, Accreditation number: 2022/75",
             "Deputy Director of Al-Sawab Media Agency, Accreditation number: 62/2023",
             "Professional local trainer in human development"
-          ]
-        }
+          ],
+          work: "Previous positions"
+        }, 
 
       },
       home: {
         mainMessage: "A world of possibilities in every",
         smallText: "child's hands",
         definition: "Helping children shape their own future through education and support",
-        donationButton: "Support our case"
+        donationButton: "Support our case",
+        programs: "Our Programs"
       },
       activites: "Our latest activities",
       project: "Our projects",
@@ -203,6 +206,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         president: {
+          presidentTitle: "Association's President",
           name: "Ingénieur Mohammed Ahmed Ammar",
           title: "Président de l'Organisation Chinguetti d'Aide aux Pauvres",
           organization: "Organisation Chinguetti d'Aide aux Pauvres",
@@ -216,7 +220,8 @@ We have several interventions in place. This includes :`,
             "Expert judiciaire agréé dans le domaine de la gestion des institutions et des projets, numéro d'accréditation: 2022/75",
             "Directeur adjoint de l'Agence Médiatique Al-Sawab, numéro d'accréditation: 62/2023",
             "Formateur professionnel local en développement humain"
-          ]
+          ], 
+          work: "poste précédent"
         },
         
       },
@@ -225,7 +230,8 @@ We have several interventions in place. This includes :`,
         mainMessage: "Le pouvoir de choisir dans",
         smallText: "les mains d'un enfant",
         definition: "Aider les enfants à façonner leur propre avenir grâce à l'éducation et au soutien",
-        donationButton: "soutenez notre cas"
+        donationButton: "soutenez notre cas", 
+        programs:"Nos Programmes"
       },
       projects: "Nos projets",
       donation: {
@@ -340,6 +346,7 @@ We have several interventions in place. This includes :`,
           ]
         },
         president: {
+          presidentTitle: "رئيس الجمعية",
           name: "المهندس محمد أحمد عمار",
           title: "رئيس منظمة شنقيط مساعدة الفقراء",
           organization: "منظمة شنقيط مساعدة الفقراء",
@@ -353,14 +360,16 @@ We have several interventions in place. This includes :`,
             "خبير قضائي معتمد في مجال تسيير المؤسسات والمشاريع رقم الاعتماد: 2022/75",
             "المدير النائب لوكالة الصواب ميديا انفوا رقم الاعتماد: 62/2023",
             "مدرب محترف للتنمية البشرية"
-          ]
+          ],
+          work: "الأعمال السابقة"
         },
       },
       home: {
         mainMessage: "عالم من الفرص بين ",
         smallText: "يدي كل طفل",
         definition: "مساعدة الأطفال على تشكيل مستقبلهم من خلال التعليم والدعم",
-        donationButton: "ادعم قضيتنا"
+        donationButton: "ادعم قضيتنا", 
+        programs: "برامجنا"
       },
       activites:"أحدث أنشطتنا",
       projects: "مشاريعنا",

@@ -19,6 +19,8 @@ import i18next from "i18next";
 
 export function Blog({ image, content, author, publishDate, title, id }: blogObj) {
      const { t } = useTranslation() ; 
+     
+     const textRegex = /<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>|<\/?\w+\/?>?|[<>\/]/gi
     return (
         <Link to={`/blog/${id}`}>
         <div className={`blog p-4 rounded-2xl ${i18next.language === "ar" ? "rtl": "ltr"}`}>
@@ -31,7 +33,7 @@ export function Blog({ image, content, author, publishDate, title, id }: blogObj
             <>
                 {/* {parser(content.length <70 ? content : content.slice(0,76) +"...")} */}
                 <p className="text-xs">
-                {content.length > 70 ? content.slice(0, 69).replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "") : content.replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "") }
+                {content.length > 70 ? content.replace(textRegex, "").slice(0, 69) + ".....": content.replace(textRegex, "") }
                 </p>
             </>
             <Button className="mt-2">

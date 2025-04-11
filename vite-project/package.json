@@ -7,6 +7,7 @@
     "dev": "vite",
     "start": "npx tsx server/server.ts",
     "build": "vite build",
+    "setup":"npm install --legacy-peer-deps",
     "lint": "eslint .",
     "preview": "vite preview"
   },

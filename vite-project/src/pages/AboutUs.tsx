@@ -24,11 +24,13 @@ interface PharmacyType {
     additionalServices: string[],
 }
 interface PresidentType {
+    presidentTitle: string,
   name: string,
   title: string,
   organization: string,
   accreditationNumber: string,
-  previousPositions: string[]
+  previousPositions: string[], 
+  work: string
 }
 
 export default function AboutUs() {
@@ -155,7 +157,9 @@ export default function AboutUs() {
                 </section>
 
                 <section className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
-                    <h2 className="text-3xl font-bold text-indigo-800 mb-6 px-6 pt-6">Association President</h2>
+                    <h2 className="text-3xl font-bold text-indigo-800 mb-6 px-6 pt-6">
+                        {president.presidentTitle}
+                    </h2>
                     <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/3 p-6">
                             <img
@@ -172,7 +176,7 @@ export default function AboutUs() {
                         </div>
 
                         <div className="md:w-2/3 p-6">
-                            <h4 className="text-lg font-semibold mb-3">Previous Positions:</h4>
+                            <h4 className="text-lg font-semibold mb-3">{president.work}: </h4>
                             <ul className="space-y-2 list-disc pl-5 text-gray-700">
                                 {president.previousPositions.map((position: string, index: number) => (
                                     <li key={index}>{position}</li>
