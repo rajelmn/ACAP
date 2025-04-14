@@ -7,6 +7,8 @@ export default function BlogPage() {
     const {id} = useParams() ; 
     const [blog ,setBlog] = useState<blogObj>(); 
     const [lang, setLang] = useState("")
+    console.log("blog")
+    alert('blog page')
     console.log(lang)
     useEffect(() => {
         async function getCurrentBlog() {

@@ -1,6 +1,6 @@
 
 
-export function isAuthenticated(req, res , next) {
+function isAuthenticated(req, res , next) {
     if(!req.session.loggedIn) {
         console.log("Not authenticated"); 
         return res.status(401).json({errorMessage: "you dont have the permission"})
@@ -8,3 +8,5 @@ export function isAuthenticated(req, res , next) {
     console.log('authenticated')
     return next()
 }
+
+module.exports = {isAuthenticated}
