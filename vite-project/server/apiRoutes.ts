@@ -20,8 +20,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // Port 465 uses SSL
   auth: {
-    user: process.env.USER,
-    pass: process.env.PASSWORD
+    user:process.env.EMAIL,
+    pass: process.env.PASS
   }
 });
 
@@ -114,17 +114,19 @@ const transporter = nodemailer.createTransport({
       console.log(name, email, '\n', message)
   
   const mailOptions = {
-    from: email, // Sender's email (could be from form input)
-    to: "rajel@acap-mr.com", // Your webmail address where the form submissions should go
-    subject: "Contact Form Submission", // Subject of the email
-    text: `Message: ${message}`, // The body of the email
+    from: email, 
+    to: "rajelghmn@acap-mr.com", 
+    subject: `Acap form submission from : ${name}`, 
+    text: `Message: ${message}`,
     };
     
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.log(error)
     return res.status(500).send({ success: false, error });
     }
+    console.log(info)
     res.status(200).send({ success: true, info });
     });
     } catch(err) {

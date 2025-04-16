@@ -42,7 +42,6 @@ export default function PostPopup({ setIsPosting, setErrorMessage , setSucess}: 
             }
             const sucessRes = await res.json(); 
             setSucess(sucessRes.message)
-            alert(sucessRes)
             
         }
         catch (err) {

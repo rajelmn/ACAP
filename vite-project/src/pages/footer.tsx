@@ -7,16 +7,30 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { FiMail as Mail } from "react-icons/fi";
 // Contact icons
+import { useState } from "react";
+import { GoCheckCircleFill as Sucess } from "react-icons/go";
 import Table from "../components/table"
 import { useTranslation } from "react-i18next";
 import { Phone, MapPin } from "lucide-react";
+import { LoadingOverlay } from "@/components/popups/postPopup";
 import React from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 const ContactSection = () => {
   const { t } = useTranslation() ; 
+  const [showmail, setShowmail] = useState<boolean>(false)
+  const [loading , setLoading] = useState<boolean>(false) ; 
   const handleFormSubmission = async (e: React.FormEvent) => {
     try {
       e.preventDefault() ; 
+      setLoading(true)
       const name = e.target.name.value ;
       const email = e.target.email.value; 
       const message = e.target.message.value; 
@@ -32,19 +46,36 @@ const ContactSection = () => {
           message
         })
       })
-      if(!res.ok) {
+      if(res.ok) {
         // alert("error when submitting the form"); 
-        const errObj = await res.json()  ;
-
-        console.log(JSON.stringify(errObj))
+        setShowmail(true)
       }
     } catch(err) {
       console.log(err) ; 
     }
+    finally {
+      setLoading(false)
+    }
   }
   return (
     <>
-      {/* Contact Section */}
+     <Dialog open={showmail} onOpenChange={setShowmail}>
+      <DialogContent className="sm:max-w-[425px]">
+  <DialogHeader>
+    <DialogTitle>transaction completed</DialogTitle>
+    <DialogDescription>
+      <div className='text-[#3fe03f] b text-center text-2xl my-3'>
+        <Sucess />
+      </div>
+      <p>
+      email was sent succesfuly
+      </p>
+    </DialogDescription>
+  </DialogHeader>
+
+</DialogContent>
+</Dialog>
+     {loading && <LoadingOverlay loading={loading}/>}
       <section id="contact" className="py-16 bg-gray-50" dir="ltr">
         <div className="container max-w-5xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
@@ -65,7 +96,7 @@ const ContactSection = () => {
                 <CardContent className="space-y-4">
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 mr-3 text-gray-500" />
-                    <p>contact@acap.net</p>
+                    <p>contact@acap-mr.com</p>
                   </div>
                   <div className="flex items-center">
                     <Phone className="w-5 h-5 mr-3 text-gray-500" />

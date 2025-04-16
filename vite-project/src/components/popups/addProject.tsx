@@ -58,7 +58,6 @@ export default function AddProject({setErrorMessage, setSucess} : {setErrorMessa
                 }
                 const successResponse = await res.json(); 
                 setSucess(successResponse.message)
-                alert(successResponse.messasge)
                 
             }
             catch (err) {
@@ -66,7 +65,8 @@ export default function AddProject({setErrorMessage, setSucess} : {setErrorMessa
             }
             finally {
                 setLoading(false)
-                setBlogOpen(false)         
+                setBlogOpen(false)
+
             }
         }
     return (
