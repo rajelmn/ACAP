@@ -16,7 +16,7 @@ import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import { PhoneNumber } from "../dashboard"
 
-export default function PhoneEdit({phone , setErrorMessage} : { phone: PhoneNumber, setErrorMessage:(arg:string) => void}) {
+export default function PhoneEdit({phone , setErrorMessage, setSucess} : { phone: PhoneNumber, setErrorMessage:(arg:string) => void, setSucess: (arg: string) => void}) {
     const [loading, setLoading] = useState<boolean>(false) ; 
     const [open ,setOpen] = useState(false); 
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -42,10 +42,11 @@ export default function PhoneEdit({phone , setErrorMessage} : { phone: PhoneNumb
                     body: formData,
                 })
     
+                const response = await res.json();
                 if(!res.ok) {
-                    const response = await res.json();
-                    setErrorMessage(response.error)
+                    return setErrorMessage(response.error)
                 }
+                setSucess(response.message)
             }
             catch (err) {
                 console.log(err)

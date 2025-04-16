@@ -9,7 +9,8 @@ import PhoneEdit from './popups/phoneEdit';
 import EditProjects from './popups/EditProject';
 import EditBlog from './popups/EditBlog';
 import { useNavigate } from 'react-router';
-import parse from "html-react-parser"
+import { GoCheckCircleFill as Sucess } from "react-icons/go";
+
 import { MdCancel as Cancel } from "react-icons/md";
 import {
   Dialog,
@@ -45,6 +46,7 @@ const Dashboard = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogs, setBlogs] = useState<blogObj[]>([]);
   const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [sucess, setSucess] = useState<string>("")
   const [errorMessage, setErrorMessage] = useState<string>(""); 
 
   const arabicBlogs = blogs.filter(item => item.lng === 'ar')
@@ -166,7 +168,7 @@ const Dashboard = () => {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Projects</h2>
-              <AddProject setErrorMessage={setErrorMessage} />
+              <AddProject setSucess={setSucess} setErrorMessage={setErrorMessage} />
             </div>
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
@@ -208,7 +210,7 @@ const Dashboard = () => {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Phone Numbers</h2>
-              <AddPhone setErrorMessage={setErrorMessage} setPhoneNumbers={setPhoneNumbers} />
+              <AddPhone setSucess={setSucess} setErrorMessage={setErrorMessage} setPhoneNumbers={setPhoneNumbers} />
             </div>
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
@@ -243,7 +245,7 @@ const Dashboard = () => {
                         <td className="p-4">{item.number}</td>
                         <td className="p-4 text-gray-600">{item.date}</td>
                         <td className="p-4 text-right">
-                          <PhoneEdit setErrorMessage={setErrorMessage} phone={item}
+                          <PhoneEdit setSucess={setSucess} setErrorMessage={setErrorMessage} phone={item}
                           />
                           <Delete
                             id={item.id}
@@ -260,7 +262,7 @@ const Dashboard = () => {
       case 'blog':
         return (
           <div>
-            {isPosting && <PostPopup setErrorMessage={setErrorMessage} setIsPosting={setIsPosting} />}
+            {isPosting && <PostPopup setSucess={setSucess} setErrorMessage={setErrorMessage} setIsPosting={setIsPosting} />}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Blog Posts</h2>
               <button
@@ -292,7 +294,7 @@ const Dashboard = () => {
                         <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
                  
                         <td className="p-4 text-right">
-                          <EditBlog setErrorMessage={setErrorMessage
+                          <EditBlog setSucess={setSucess} setErrorMessage={setErrorMessage
 
                           } blogObj={post} />
                           <Delete
@@ -336,6 +338,24 @@ const Dashboard = () => {
 
           </DialogContent>
         </Dialog>
+
+        <Dialog open={sucess.length > 0 ? true : false} onOpenChange={() => setSucess("")}>
+
+<DialogContent className="sm:max-w-[425px]">
+  <DialogHeader>
+    <DialogTitle>it was uploaded sucessfuly</DialogTitle>
+    <DialogDescription>
+      <div className='text-[#3fe03f] text-center text-2xl my-3'>
+        <Sucess />
+      </div>
+      <p>
+      {sucess}
+      </p>
+    </DialogDescription>
+  </DialogHeader>
+
+</DialogContent>
+</Dialog>
         {/* Sidebar */}
         <div className={`bg-gray-800 text-white ${sidebarCollapsed ? 'w-16' : 'w-64'} transition-all duration-300`}>
           <div className="p-4 flex items-center justify-between">

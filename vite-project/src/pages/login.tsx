@@ -31,6 +31,8 @@ export default function LoginPage() {
                 return navigate("/admin")
             }
             const resObj = await res.json() ; 
+            alert(resObj.errorMessage)
+            console.log(resObj.errorMessage)
             setErrorMessage(resObj.errorMessage)
 
 

@@ -17,9 +17,10 @@ import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import Lang from "../lang"
 
-export default function AddProject({setErrorMessage} : {setErrorMessage: (arg: string) => void}) {
+export default function AddProject({setErrorMessage, setSucess} : {setErrorMessage: (arg: string) => void, setSucess:(arg: string) => void}) {
     const [lang, setLang] = useState("");
     const [loading, setLoading] = useState<boolean>(false) ; 
+    const [blogOpen, setBlogOpen] = useState<boolean>(false)
     function handleLanguageChange(language: string) {
         setLang(language)
     }
@@ -53,20 +54,25 @@ export default function AddProject({setErrorMessage} : {setErrorMessage: (arg: s
     
                 if(!res.ok) {
                     const response = await res.json();
-                    setErrorMessage(response.error)
+                   return setErrorMessage(response.error)
                 }
+                const successResponse = await res.json(); 
+                setSucess(successResponse.message)
+                alert(successResponse.messasge)
+                
             }
             catch (err) {
                 console.log(err)
             }
             finally {
                 setLoading(false)
+                setBlogOpen(false)         
             }
         }
     return (
         <>
                     <LoadingOverlay loading={loading} />
-            <Dialog>
+            <Dialog open={blogOpen} onOpenChange={setBlogOpen}>
                 <DialogTrigger asChild>
                     <button
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"> Add Project</button>

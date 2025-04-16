@@ -20,7 +20,7 @@ const connectDb = require("./db");
     cloudinary.config({
         cloud_name: "dwa2csohq",
         api_key: process.env.API_KEY,
-        api_secret: process.env.API_SECRET,
+        api_secret: process.env.API_SECRET ,
     });
     app.use(express.json());
     app.use(cors());
@@ -38,7 +38,7 @@ const connectDb = require("./db");
     app.use("/images", express.static("images"));
     app.use(express.static(path.join(__dirname, "..", "dist")));
   
-    app.use("/api", router);
+    app.use("/", router);
     app.get("*", function (_req, res) {
         // console.log("sending", __dirname);
         res.sendFile(path.join(__dirname, "..", "dist/index.html"));

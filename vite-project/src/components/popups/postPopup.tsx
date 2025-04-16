@@ -7,7 +7,7 @@ import Lang from "../lang";
 import { createPortal } from "react-dom";
 
 
-export default function PostPopup({ setIsPosting, setErrorMessage }: { setIsPosting: (arg: boolean) => void , setErrorMessage: (arg: string) => void}) {
+export default function PostPopup({ setIsPosting, setErrorMessage , setSucess}: { setIsPosting: (arg: boolean) => void , setErrorMessage: (arg: string) => void, setSucess:(arg: string) => void}) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
     const [loading, setLoading] = useState<boolean>(false); 
@@ -38,8 +38,11 @@ export default function PostPopup({ setIsPosting, setErrorMessage }: { setIsPost
             if(!res.ok) {
                 const response = await res.json();
                 console.log(response)
-                setErrorMessage(response.error)
+                return setErrorMessage(response.error)
             }
+            const sucessRes = await res.json(); 
+            setSucess(sucessRes.message)
+            alert(sucessRes)
             
         }
         catch (err) {

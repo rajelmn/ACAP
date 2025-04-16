@@ -95,14 +95,16 @@ const transporter = nodemailer.createTransport({
       const userInfo = await db.get("SELECT * FROM admin WHERE name = ?", [name]);
       if(userInfo) {
         const result = await bcrypt.compare(password, userInfo.password); 
-        if(!result) return res.status(401).json({errorMessage: "password or username wrong"}) 
+        if(!result) throw new Error("wrong password or username") 
         req.session.loggedIn = true
         return res.status(200).json({message: "your logged in"})
       }  else {
-        console.log('wrong username')
+        console.log('wrong username'); 
+        throw new Error("wrong password or username")
       }
     } catch(err) {
       console.log(err)
+      res.status(401).json({errorMessage: err.message})
     }
   })
   router.post("/send-mail", (req, res) =>  {
@@ -150,7 +152,9 @@ const transporter = nodemailer.createTransport({
     try {
       console.log(req.body.content, "content");
       // const theFile = req.file as 
-      const publishDate = format(new Date() , 'dd/mm/yyyy')
+      const publishDate = format(new Date() , 'dd/MM/yyyy')
+      console.log(publishDate, 'date');
+      console.log(new Date())
       const { content, title, lng, id } = JSON.parse(req.body.content);
       const result = await cloudinary.uploader.upload(req.file.path);
       const image = result.secure_url || result.url;
@@ -168,23 +172,27 @@ const transporter = nodemailer.createTransport({
   router.post("/phone", upload.single('file'), async (req, res) => {
     try {
       const { phone, id , app} = JSON.parse(req.body.content)
-      // console.log(phone, id, req.file.path)
+      // console.log(phone, id, req.file.path); 
+      const regexp = /[0-9]{8}/gi
+      if(!regexp.test(phone.replaceAll(" ", ""))) {
+        throw new Error("wrong number format, numbers should be an 8 length digits")
+      }
       const result = await cloudinary.uploader.upload(req.file.path);
       const image = result.secure_url || result.url;
-      const date = format(new Date() , "dd/mm/yyyy")
+      const date = format(new Date() , 'dd/MM/yyyy')
       // console.log(date, 'date')
   
       const insertPhone = await db.run("INSERT INTO Phone Values(?, ?, ?, ?, ?)", [date, phone, image, id, app])
       res.status(200).json({ message: "uploaded number succesfuly" })
     } catch (err) {
       console.log(err); 
-      res.status(500).json({error: err})
+      res.status(500).json({error: err.message})
     }
   })
   
   router.post("/projects", upload.single('file'), async (req, res) => {
     try {
-      const publishDate = format(new Date() , "dd/mm/yyyy")
+      const publishDate = format(new Date() , 'dd/MM/yyyy')
       const { description, cost,  title, lng, id } = JSON.parse(req.body.content);
       const result = await cloudinary.uploader.upload(req.file.path);
       console.log(req.body.content)
@@ -196,8 +204,8 @@ const transporter = nodemailer.createTransport({
   
   
     } catch (err) {
-      console.log(err); 
-      res.status(500).json({error: err})
+      console.log(err.message); 
+      res.status(500).json({error: err.message})
     }
   })
   
@@ -206,7 +214,7 @@ const transporter = nodemailer.createTransport({
     try {
       const { cost, id, description, title, lng } = JSON.parse(req.body.content);
       console.log(req.body.content);
-      const lastUpdate = format(new Date() , "dd/mm/yyyy")
+      const lastUpdate = format(new Date() , 'dd/MM/yyyy')
       if (req.file?.path) {
         const result = await cloudinary.uploader.upload(req.file.path);
         const icon = result.secure_url || result.url;
@@ -250,7 +258,7 @@ const transporter = nodemailer.createTransport({
     try {
   
       const { content, title, lng, id } = JSON.parse(req.body.content);
-      const publishDate = format(new Date() , "dd/mm/yyyy")
+      const publishDate =format(new Date() , 'dd/MM/yyyy')
       console.log(content, 'the blog content')
       if(req.file?.path) {
   

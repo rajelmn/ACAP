@@ -16,7 +16,7 @@ import { useState } from "react"
 import { LoadingOverlay } from "./postPopup"
 import { PhoneNumber } from "../dashboard"
 
-export default function AddPhone({setPhoneNumbers, setErrorMessage} : {setPhoneNumbers: (arg: PhoneNumber[]) => void, setErrorMessage: (arg: string) => void}) {
+export default function AddPhone({setPhoneNumbers, setErrorMessage, setSucess} : {setPhoneNumbers: (arg: PhoneNumber[]) => void, setErrorMessage: (arg: string) => void, setSucess: (arg: string) => void}) {
     const [loading, setLoading] = useState<boolean>(false) ; 
     const [open ,setOpen] = useState(false); 
 
@@ -44,14 +44,12 @@ export default function AddPhone({setPhoneNumbers, setErrorMessage} : {setPhoneN
                     method: "POST",
                     body: formData,
                 })
-    
+                
+                const response = await res.json(); 
                if(!res.ok) {
-                if(!res.ok) {
-                    const response = await res.json();
-                    setErrorMessage(response.error)
+                    return setErrorMessage(response.error)
                 }
-                    
-                }
+                setSucess(response.message)
                 // console.log(response);
             }
             catch (err) {

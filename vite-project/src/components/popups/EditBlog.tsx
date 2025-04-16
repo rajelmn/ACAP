@@ -16,10 +16,11 @@ import {
 import { blogObj } from "../Blog";
 
 
-export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj, setErrorMessage:(arg: string) => void}) {
+export default function EditBlog({ blogObj, setErrorMessage, setSucess}: { blogObj: blogObj, setErrorMessage:(arg: string) => void, setSucess: (arg: string) => void}) {
     const [lang, setLang] = useState<string>("");
     const [editor, setEditor] = useState<Editor | null>(null);
     const [loading, setLoading] = useState<boolean>(false); 
+    const [showBlog, setShowBlog] = useState<boolean>(false); 
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         console.log(editor?.getHTML())
         try {
@@ -46,17 +47,18 @@ export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj
                 body: formData,
             })
 
+            const response = await res.json();
             if(!res.ok) {
-                const response = await res.json();
-                setErrorMessage(response.error)
+                return setErrorMessage(response.error)
             }
-          
+          setSucess(response.message)
         }
         catch (err) {
             console.log(err)
         }
         finally {
             setLoading(false); 
+            setShowBlog(false)
         }
     }
 
@@ -66,7 +68,7 @@ export default function EditBlog({ blogObj, setErrorMessage}: { blogObj: blogObj
     }
 
     return (
-     <Dialog>
+     <Dialog open={showBlog} onOpenChange={setShowBlog}>
         <DialogTrigger asChild>
                 <button className="text-blue-600 hover:text-blue-800 font-medium mr-3 transition-colors">Edit</button>
         </DialogTrigger>
