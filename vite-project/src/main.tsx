@@ -9,26 +9,32 @@ import App from "./App.tsx";
 import AboutUs from './pages/AboutUs.tsx';
 import LoginPage from './pages/login.tsx';
 import BlogPage from './pages/Blogpage.tsx';
+import Error from './components/error.tsx';
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <Error />,
     element: <App />,
   
   },
   {
     path: "/admin",
+    errorElement: <Error />,
     element: <Dashboard />
   },
   {
     path: "/about-us",
+    errorElement: <Error />,
     element: <AboutUs />
   }, 
   {
     path: "/blog/:id?", 
+    errorElement: <Error />,
     element: <BlogPage />
   }, 
   {
     path: "/login", 
+    errorElement: <Error />,
     element: <LoginPage />
   }
 ]);

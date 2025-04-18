@@ -38,6 +38,7 @@ export interface Project {
   lastUpdate: string,
 }
 import { blogObj } from './Blog';
+import { Separator } from '@radix-ui/react-select';
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('projects');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -50,8 +51,9 @@ const Dashboard = () => {
   const [errorMessage, setErrorMessage] = useState<string>(""); 
 
   const arabicBlogs = blogs.filter(item => item.lng === 'ar')
-  const englishBlogs = blogs.filter(item => item.lng === 'em')
-  const frenshBlogs = blogs.filter(item => item.lng === 'fr')
+  const englishBlogs = blogs.filter(item => item.lng === 'en')
+  const frenchBlogs = blogs.filter(item => item.lng === 'fr'); 
+
   const navigate = useNavigate();
   console.log(blogs)
   async function handleProjectDelete(id: string) {
@@ -281,28 +283,24 @@ const Dashboard = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {blogs.map((post) => (
-                      <tr key={post.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="p-4 font-medium text-gray-900">{post.title}</td>
-                        <td className="p-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium `} >
-                          {post.lng === "ar" ? "...": ""}
-                           {post.content.replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "").slice(0,47)}
-                           {post.lng !== "ar" ? "...": ""}
-                          </span>
-                        </td>
-                        <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
-                 
-                        <td className="p-4 text-right">
-                          <EditBlog setSucess={setSucess} setErrorMessage={setErrorMessage
-
-                          } blogObj={post} />
-                          <Delete
-                            id={post.id}
-                            deletefunc={handleBlogDelete} />
-                        </td>
-                      </tr>
-                    ))}
+                   <BlogRow 
+                   handleBlogDelete={handleBlogDelete}
+                   setSucess={setSucess}
+                   setErrorMessage={setErrorMessage}
+                   blogs={englishBlogs}
+                   />
+                    <BlogRow 
+                   handleBlogDelete={handleBlogDelete}
+                   setSucess={setSucess}
+                   setErrorMessage={setErrorMessage}
+                   blogs={frenchBlogs}
+                   />
+                    <BlogRow 
+                   handleBlogDelete={handleBlogDelete}
+                   setSucess={setSucess}
+                   setErrorMessage={setErrorMessage}
+                   blogs={arabicBlogs}
+                   />
                   </tbody>
                 </table>
               </div>
@@ -417,7 +415,7 @@ const Dashboard = () => {
               <div className="flex items-center">
                 <div className="mr-4 text-right">
                   <p className="font-medium">Admin User</p>
-                  <p className="text-sm text-gray-500">admin@example.com</p>
+                  <p className="text-sm text-gray-500">contact@acap-mr.com</p>
                 </div>
                 <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
                   A
@@ -440,7 +438,35 @@ const Dashboard = () => {
 export default Dashboard
 
 
+function BlogRow({blogs, setSucess, setErrorMessage, handleBlogDelete}: {blogs: blogObj[], setSucess:(arg: string) => void, setErrorMessage:(arg: string) => void, handleBlogDelete: (arg: string) => void}) {
+  return (
+    <>
+    {blogs.map((post, index) => (
+      <tr key={post.id} className="hover:bg-gray-50 transition-colors">
+        <td className="p-4 font-medium text-gray-900">{post.title}</td>
+        <td className="p-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium `} >
+          {post.lng === "ar" ? "...": ""}
+           {post.content.replace(/<\/?\w+\s*(\w+="[^"]*"\s*)*\s*?>/gi, "").slice(0,47)}
+           {post.lng !== "ar" ? "...": ""}
+          </span>
+        </td>
+        <td className="p-4 text-gray-600">{post.publishDate || 'Not published'}</td>
+ 
+        <td className="p-4 text-right">
+          <EditBlog setSucess={setSucess} setErrorMessage={setErrorMessage
 
+          } blogObj={post} />
+          <Delete
+            id={post.id}
+            deletefunc={handleBlogDelete} />
+        </td>
+       { index !== blogs.length - 1 ? <Separator /> :'' }
+      </tr>
+    ))}
+    </>
+  )
+}
 // function BlogRow() {
 
 //   return(

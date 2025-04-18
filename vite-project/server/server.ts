@@ -38,7 +38,13 @@ const connectDb = require("./db");
     app.use("/images", express.static("images"));
     app.use(express.static(path.join(__dirname, "..", "dist")));
   
-    app.use("/", router);
+    app.use("/api", router);
+    // app.get("/robots.txt", (req, res) => {
+    //     res.sendFile(path.join(__dirname, '..', 'dist/robots.txt'))
+    // })
+    // app.get("/sitemap.xml", (req, res) => {
+    //     res.sendFile(path.join(__dirname, '..', 'dist/sitemap.xml'))
+    // })
     app.get("*", function (_req, res) {
         // console.log("sending", __dirname);
         res.sendFile(path.join(__dirname, "..", "dist/index.html"));
